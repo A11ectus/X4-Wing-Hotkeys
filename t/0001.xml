@@ -7,20 +7,30 @@
 		<!-- config -->
 		<t id="2">Debug log</t>
 		<t id="3">Do debug function</t>
-		<!-- Orders -->		
-		<t id="2000">Wing: Attack, Immediate</t>
-		<t id="2001">Wing: Fly and Wait, Immediate</t>
-		<t id="2002">Wing: Fly and Wait, Immediate/Same Plane</t>
-		<t id="2003">Wing: Fly and Wait, Same Plane</t>
-		<t id="2004">Wing: Fly and Wait, No Recall</t>
-		<t id="2005">Wing: Fly and Wait, No Recall/Same Plane</t>
-		<t id="2006">Wing: Fly and Wait, Urgent</t>
-		<t id="2007">Wing: Fly and Wait, Urgent/Same Plane</t>
-		<t id="2008">Wing: Dock and Wait, Urgent</t>
 		<!-- Selectors -->
-		<t id="3000">Select Alpha Wing</t>
-		<t id="3001">Select Beta Wing</t>
-		<t id="3002">Select Gamma Wing</t>
-		<t id="3003">Select Delta Wing</t>
+		<t id="1000">Clear Wing Selection: </t>
+		<t id="1001">Select Beta Wing</t>
+		<t id="1002">Select Gamma Wing</t>
+		<t id="1003">Select Delta Wing</t>
+		<t id="1004">Select Delta Wing</t>
+		<!-- Orders -->		
+		<t id="2000">Wing: Remove All Orders</t>		
+		<t id="2001">Wing: Remove First Order</t>		
+		<t id="2002">Wing: Remove Last Order</t>		
+		<t id="2003">Wing: Fly and Wait</t>
+		<t id="2004">Wing: Dock and Wait</t>
+		<t id="2005">Wing: Follow until further notice</t>
+		<t id="2006">Wing: Attack</t>
+		<t id="2007">Wing: Attack targets in range</t>
+		<!-- Urgent Orders -->		
+		<t id="3000">Wing: Attack, Immediate</t>
+		<t id="3001">Wing: Fly and Wait, Immediate</t>
+		<t id="3002">Wing: Fly and Wait, Immediate/Same Plane</t>
+		<t id="3003">Wing: Fly and Wait, Same Plane</t>
+		<t id="3004">Wing: Fly and Wait, No Recall</t>
+		<t id="3005">Wing: Fly and Wait, No Recall/Same Plane</t>
+		<t id="3006">Wing: Fly and Wait, Urgent</t>
+		<t id="3007">Wing: Fly and Wait, Urgent/Same Plane</t>
+		<t id="3008">Wing: Dock and Wait, Urgent</t>
 	</page>
 </language>
