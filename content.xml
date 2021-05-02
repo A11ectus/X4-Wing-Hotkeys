@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content id="ALWingHotkeys" name="Wing Hotkeys" author="Allectus" version="100" date="2021-05-01" save="false" enabled="1" description="Adds hotkeys to select wings and issue orders to them." sync="false" lastupdate="1618759768">
+  <dependency id="ws_2042901274" optional="false" name="SirNukes Mod Support APIs"/>
+</content>
