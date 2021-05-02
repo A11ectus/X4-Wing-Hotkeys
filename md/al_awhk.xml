@@ -52,7 +52,7 @@
 										$id = 'order_select_clear_m',
 										$section = $section,
 										$text = $text,
-										$icon = 'order_movewait',
+										$icon = 'order_recycle',
 										$callback = InteractMenu_OnSelectWing,
 										$echo='Clear'
 									]" />							
@@ -64,7 +64,7 @@
 										$id = 'order_select_alpha_m',
 										$section = $section,
 										$text = $text,
-										$icon = 'order_movewait',
+										$icon = 'order_assigncommander',
 										$callback = InteractMenu_OnSelectWing,
 										$echo='Alpha'
 									]" />
@@ -76,7 +76,7 @@
 										$id = 'order_select_beta_m',
 										$section = $section,
 										$text = $text,
-										$icon = 'order_movewait',
+										$icon = 'order_assigncommander',
 										$callback = InteractMenu_OnSelectWing,
 										$echo='Beta'
 									]" />
@@ -88,7 +88,7 @@
 										$id = 'order_select_gamma_m',
 										$section = $section,
 										$text = $text,
-										$icon = 'order_movewait',
+										$icon = 'order_assigncommander',
 										$callback = InteractMenu_OnSelectWing,
 										$echo='Gamma'
 									]" />								
@@ -100,20 +100,11 @@
 										$id = 'order_select_delta_m',
 										$section = $section,
 										$text = $text,
-										$icon = 'order_movewait',
+										$icon = 'order_assigncommander',
 										$callback = InteractMenu_OnSelectWing,
 										$echo='Delta'
 									]" />	
 							</do_if>
-							
-							<!--
-							Clear Orders
-							Follow
-							Attack in Range
-							
-							Update UO commands
-							STO commands
-							-->
 							
 							<!--Base Orders-->							
 							<do_if value="$target and player.entity.$SelectedWing and 
@@ -123,7 +114,7 @@
 									$id = 'order_remove_all_orders_whk',
 									$section = $section,
 									$text = $text,
-									$icon = 'order_movewait',
+									$icon = 'order_waitforsignal',
 									$callback = InteractMenu_OnRemoveOrdersWHK,
 									$echo='Wing: All'
 								]" />
@@ -133,7 +124,7 @@
 									$id = 'remove_first_order_whk',
 									$section = $section,
 									$text = $text,
-									$icon = 'order_movewait',
+									$icon = 'order_waitforsignal',
 									$callback = InteractMenu_OnRemoveOrdersWHK,
 									$echo='Wing: First'
 								]" />
@@ -143,7 +134,7 @@
 									$id = 'remove_last_order_whk',
 									$section = $section,
 									$text = $text,
-									$icon = 'order_movewait',
+									$icon = 'order_waitforsignal',
 									$callback = InteractMenu_OnRemoveOrdersWHK,
 									$echo='Wing: Last'
 								]" />
@@ -172,14 +163,14 @@
 							]" />
 							</do_if>	
 							
-							<do_if value="$target and player.entity.$SelectedWing and 
+							<do_if value="($target.isclass.ship or $target.isclass.spacesuit) and player.entity.$SelectedWing and 
 							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
 								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 2005}" comment="Wing: Follow until further notice" />
 									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 										$id = 'order_follow_whk',
 										$section = $section,
 										$text = $text,
-										$icon = 'order_movewait',
+										$icon = 'order_follow',
 										$callback = InteractMenu_OnMoveWHK,
 										$echo='Wing: Follow'
 									]" />
@@ -204,7 +195,7 @@
 										$id = 'order_attackinrange_whk',
 										$section = $section,
 										$text = $text,
-										$icon = 'order_attack',
+										$icon = 'order_attackinrange',
 										$callback = InteractMenu_OnAttackWHK,
 										$echo='Wing: Attack in range'
 									]" />
@@ -322,7 +313,7 @@
 										$id = 'order_select_clear_pi',
 										$section = $section,
 										$text = $text,
-										$icon = 'order_movewait',
+										$icon = 'order_recycle',
 										$callback = InteractMenu_OnSelectWing,
 										$echo='Clear'
 									]" />							
@@ -334,7 +325,7 @@
 									$id = 'order_select_alpha_pi',
 									$section = $section,
 									$text = $text,
-									$icon = 'order_movewait',
+									$icon = 'order_assigncommander',
 									$callback = InteractMenu_OnSelectWing,
 									$echo='Alpha'
 								]" />
@@ -346,7 +337,7 @@
 										$id = 'order_select_beta_pi',
 										$section = $section,
 										$text = $text,
-										$icon = 'order_movewait',
+										$icon = 'order_assigncommander',
 										$callback = InteractMenu_OnSelectWing,
 										$echo='Beta'
 									]" />								
@@ -358,7 +349,7 @@
 										$id = 'order_select_gamma_pi',
 										$section = $section,
 										$text = $text,
-										$icon = 'order_movewait',
+										$icon = 'order_assigncommander',
 										$callback = InteractMenu_OnSelectWing,
 										$echo='Gamma'
 									]" />								
@@ -370,7 +361,7 @@
 										$id = 'order_select_delta_pi',
 										$section = $section,
 										$text = $text,
-										$icon = 'order_movewait',
+										$icon = 'order_assigncommander',
 										$callback = InteractMenu_OnSelectWing,
 										$echo='Delta'
 									]" />																		
