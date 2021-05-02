@@ -118,7 +118,7 @@
 							<!--Base Orders-->							
 							<do_if value="$target and player.entity.$SelectedWing and 
 							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
-								<set_value name="$text" exact="{23811, 2000}" comment="Wing: Remove All Orders" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 2000}" comment="Wing: Remove All Orders" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_remove_all_orders_whk',
 									$section = $section,
@@ -128,7 +128,7 @@
 									$echo='Wing: All'
 								]" />
 
-								<set_value name="$text" exact="{23811, 2001}" comment="Wing: Remove First Order" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 2001}" comment="Wing: Remove First Order" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'remove_first_order_whk',
 									$section = $section,
@@ -138,7 +138,7 @@
 									$echo='Wing: First'
 								]" />
 
-								<set_value name="$text" exact="{23811, 2002}" comment="Wing: Remove Last Order" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 2002}" comment="Wing: Remove Last Order" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'remove_last_order_whk',
 									$section = $section,
@@ -149,7 +149,7 @@
 								]" />
 
 								
-								<set_value name="$text" exact="{23811, 2003}" comment="Wing: Fly and Wait" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 2003}" comment="Wing: Fly and Wait" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_move_whk',
 									$section = $section,
@@ -161,7 +161,7 @@
 							</do_if>
 							
 							<do_if value="@$target.dockingallowed.{@player.occupiedship} and @player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">	
-							<set_value name="$text" exact="{23811, 2004}" comment="Wing: Dock and Wait" />
+							<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 2004}" comment="Wing: Dock and Wait" />
 							<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 								$id = 'order_dock_whk',
 								$section = $section,
@@ -174,7 +174,7 @@
 							
 							<do_if value="$target and player.entity.$SelectedWing and 
 							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
-								<set_value name="$text" exact="{23811, 2005}" comment="Wing: Follow until further notice" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 2005}" comment="Wing: Follow until further notice" />
 									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 										$id = 'order_follow_whk',
 										$section = $section,
@@ -186,7 +186,7 @@
 							</do_if>
 							
 							<do_if value="($target.isclass.destructible) and (not ($target.owner == faction.player))  and @player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">	
-								<set_value name="$text" exact="{23811, 2006}" comment="Wing: Attack" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 2006}" comment="Wing: Attack" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_attack_whk',
 									$section = $section,
@@ -199,7 +199,7 @@
 
 							<do_if value="$target and player.entity.$SelectedWing and 
 							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
-								<set_value name="$text" exact="{23811, 2007}" comment="Wing: Attack targets in range" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 2007}" comment="Wing: Attack targets in range" />
 									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 										$id = 'order_attackinrange_whk',
 										$section = $section,
@@ -213,97 +213,97 @@
 							<!--Urgent Orders-->
 							<do_if value="$target and player.entity.$SelectedWing and 
 							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
-								<set_value name="$text" exact="{23811, 3001}" comment="Wing: Fly and Wait, Immediate" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 3001}" comment="Wing: Fly and Wait, Immediate" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_move_immediate',
 									$section = $section,
 									$text = $text,
 									$icon = 'order_movewait',
-									$callback = InteractMenu_OnMoveUrgent,
+									$callback = md.al_urgent_orders.InteractMenu_OnMoveUrgent,
 									$echo='Wing: Immediate'
 								]" />
 
-								<set_value name="$text" exact="{23811, 3002}" comment="Wing: Fly and Wait, Immediate/Same Plane" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 3002}" comment="Wing: Fly and Wait, Immediate/Same Plane" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_move_immediatesameplane',
 									$section = $section,
 									$text = $text,
 									$icon = 'order_movewait',
-									$callback = InteractMenu_OnMoveUrgent,
+									$callback = md.al_urgent_orders.InteractMenu_OnMoveUrgent,
 									$echo='Wing: Immediate / Same Plane'
 								]" />
 
-								<set_value name="$text" exact="{23811, 3003}" comment="Wing: Fly and Wait, Same Plane" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 3003}" comment="Wing: Fly and Wait, Same Plane" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_move_sameplane',
 									$section = $section,
 									$text = $text,
 									$icon = 'order_movewait',
-									$callback = InteractMenu_OnMoveUrgent,
+									$callback = md.al_urgent_orders.InteractMenu_OnMoveUrgent,
 									$echo='Wing: Same Plane'
 								]" />
 								
-								<set_value name="$text" exact="{23811, 3004}" comment="Wing: Fly and Wait, No Recall" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 3004}" comment="Wing: Fly and Wait, No Recall" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_move_norecall',
 									$section = $section,
 									$text = $text,
 									$icon = 'order_movewait',
-									$callback = InteractMenu_OnMoveUrgent,
+									$callback = md.al_urgent_orders.InteractMenu_OnMoveUrgent,
 									$echo='Wing: No Recall'
 								]" />
 
-								<set_value name="$text" exact="{23811, 3005}" comment="Wing: Fly and Wait, No Recall/Same Plane" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 3005}" comment="Wing: Fly and Wait, No Recall/Same Plane" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_move_norecallsameplane',
 									$section = $section,
 									$text = $text,
 									$icon = 'order_movewait',
-									$callback = InteractMenu_OnMoveUrgent,
+									$callback = md.al_urgent_orders.InteractMenu_OnMoveUrgent,
 									$echo='Wing: No Recall / Same Plane'
 								]" />							
 
-								<set_value name="$text" exact="{23811, 3006}" comment="Wing: Fly and Wait, Urgent" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 3006}" comment="Wing: Fly and Wait, Urgent" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_move_urgent',
 									$section = $section,
 									$text = $text,
 									$icon = 'order_movewait',
-									$callback = InteractMenu_OnMoveUrgent,
+									$callback = md.al_urgent_orders.InteractMenu_OnMoveUrgent,
 									$echo='Wing: Urgent'
 								]" />															
 								
-								<set_value name="$text" exact="{23811, 3007}" comment="Wing: Fly and Wait, Urgent/Same Plane" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 3007}" comment="Wing: Fly and Wait, Urgent/Same Plane" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_move_urgentsameplane',
 									$section = $section,
 									$text = $text,
 									$icon = 'order_movewait',
-									$callback = InteractMenu_OnMoveUrgent,
+									$callback = md.al_urgent_orders.InteractMenu_OnMoveUrgent,
 									$echo='Wing: Urgent / Same Plane'
 								]" />										
 							</do_if>
 							
 							<do_if value="@$target.dockingallowed.{@player.occupiedship} and @player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">	
-								<set_value name="$text" exact="{23811, 3008}" comment="Dock and Wait, Urgent" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 3008}" comment="Dock and Wait, Urgent" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_dock_urgent',
 									$section = $section,
 									$text = $text,
 									$icon = 'order_dockandwait',
-									$callback = InteractMenu_OnDockUrgent,
+									$callback = md.al_urgent_orders.InteractMenu_OnDockUrgent,
 									$echo='Wing: Urgent'
 								]" />
 							</do_if>
 							
 							<do_if value="($target.isclass.destructible) and (not ($target.owner == faction.player))  and @player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">	
-								<set_value name="$text" exact="{23811, 3000}" comment="Attack, Immediate" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 3000}" comment="Attack, Immediate" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_attack_immediate',
 									$section = $section,
 									$text = $text,
 									$icon = 'order_attack',
-									$callback = InteractMenu_OnAttackUrgent,
+									$callback = md.al_urgent_orders.InteractMenu_OnAttackUrgent,
 									$echo='Wing: Immediate'
 								]" />
 							</do_if>	
@@ -449,7 +449,7 @@
 						<do_for_each name="$ship" in="$orderships">
 							<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
 							<do_if value="$ship">
-								<create_order name="$order" object="$ship" id="'MoveWait'"">
+								<create_order name="$order" object="$ship" id="'MoveWait'">
 									<param name="destination" value="$destfinal" />
 									<param name="debugchance" value="alAWHK.$debugChance" />
 								</create_order>
@@ -474,7 +474,7 @@
 						<do_for_each name="$ship" in="$orderships">
 							<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
 							<do_if value="$ship">
-								<create_order name="$order" object="$ship" id="'MoveWait'"">
+								<create_order name="$order" object="$ship" id="'MoveWait'">
 									<param name="destination" value="$destfinal" />
 									<param name="debugchance" value="alAWHK.$debugChance" />
 								</create_order>
