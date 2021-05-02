@@ -9,9 +9,9 @@
 		<t id="3">Do debug function</t>
 		<!-- Selectors -->
 		<t id="1000">Clear Wing Selection: </t>
-		<t id="1001">Select Beta Wing</t>
-		<t id="1002">Select Gamma Wing</t>
-		<t id="1003">Select Delta Wing</t>
+		<t id="1001">Select Alpha Wing</t>
+		<t id="1002">Select Beta Wing</t>
+		<t id="1003">Select Gamma Wing</t>
 		<t id="1004">Select Delta Wing</t>
 		<!-- Orders -->		
 		<t id="2000">Wing: Remove All Orders</t>		
