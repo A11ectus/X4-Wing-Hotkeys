@@ -4,7 +4,7 @@ local C = ffi.C
 
 local menu = {}
 local whk = {}
-local Lib = require("SirNukesModSupportAPIs")
+local Lib = require("extensions.sn_mod_support_apis.lua_library")
 
 function init()
 
