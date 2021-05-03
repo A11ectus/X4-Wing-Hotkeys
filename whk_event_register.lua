@@ -13,7 +13,7 @@ function init()
     RegisterEvent(whk_event_Clear, whk.clearOrders)
 end
 
-whk.clearOrders(_, params)
+function whk.clearOrders(_, params)
     local ship, removedefaultorder, removeassignment, removedockorder = string.match(params, "(.+);(.+);(.+);(.+)")
     
     menu.orderRemove(ship, removedefaultorder, removeassignment, removedockorder)

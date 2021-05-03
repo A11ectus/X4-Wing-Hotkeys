@@ -168,7 +168,7 @@
 										$section = $section,
 										$text = $text,
 										$icon = 'order_follow',
-										$callback = InteractMenu_OnMoveWHK,
+										$callback = InteractMenu_OnFollowWHK,
 										$echo='Wing: Follow'
 									]" />
 							</do_if>
@@ -193,12 +193,12 @@
 										$section = $section,
 										$text = $text,
 										$icon = 'order_attackinrange',
-										$callback = InteractMenu_OnAttackWHK,
+										$callback = InteractMenu_OnAttackInRangeWHK,
 										$echo='Wing: Attack in range'
 									]" />
 							</do_if>
 							
-							<!--Urgent Orders-->$WHK_AUO_Enabled
+							<!--Urgent Orders-->
 							<do_if value="player.entity.$WHK_AUO_Enabled and $target and player.entity.$SelectedWing and 
 							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
 								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 3001}" comment="Wing: Fly and Wait, Immediate" />
@@ -421,6 +421,28 @@
 						<reset_cue cue="this" />
 					</actions>
 				</cue>	
+				<cue name="InteractMenu_OnFollowWHK">
+					<conditions>
+						<event_cue_signalled />
+					</conditions>
+					<actions>
+						<set_value name="$target" exact="event.param.$object" />
+						<set_value name="$followcat" exact="event.param.$echo" />
+						
+						<set_value name="$orderships" exact="@player.occupiedship.subordinatesingroup.{player.entity.$SelectedWingID}" />
+						
+						<do_for_each name="$ship" in="@$orderships">						
+							<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
+							<do_if value="$ship">
+								<create_order name="$order" object="$ship" id="'Follow'">
+									<param name="target" value="$target" />
+									<param name="debugchance" value="alAWHK.$debugChance" />
+								</create_order>
+							</do_if>
+						</do_for_each>
+						<reset_cue cue="this" />
+					</actions>
+				</cue>					
 				<cue name="InteractMenu_OnRemoveOrdersWHK">
 					<conditions>
 						<event_cue_signalled />
@@ -462,6 +484,31 @@
 						<reset_cue cue="this" />
 					</actions>
 				</cue>				
+				<cue name="InteractMenu_OnAttackInRangeWHK">
+					<conditions>
+						<event_cue_signalled />
+					</conditions>
+					<actions>
+						<set_value name="$destobject" exact="event.param.$object" />
+						<set_value name="$destoffset" exact="event.param.$offset" />
+						<set_value name="$destoffsetcomponent" exact="event.param.$offsetcomponent" />
+						<set_value name="$destfinal" exact="[$destoffsetcomponent, $destoffset]" />
+						<set_value name="$attackcat" exact="event.param.$echo" />
+							
+						<set_value name="$orderships" exact="@player.occupiedship.subordinatesingroup.{player.entity.$SelectedWingID}" />
+												
+						<do_for_each name="$ship" in="$orderships">
+							<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
+							<do_if value="$ship">
+								<create_order name="$order" object="$ship" id="'AttackInRange'">
+									<param name="destination" value="$destfinal" />
+									<param name="debugchance" value="alAWHK.$debugChance" />
+								</create_order>
+							</do_if>
+						</do_for_each>
+						<reset_cue cue="this" />
+					</actions>
+				</cue>								
 				<cue name="InteractMenu_OnDockWHK">
 					<conditions>
 						<event_cue_signalled />
