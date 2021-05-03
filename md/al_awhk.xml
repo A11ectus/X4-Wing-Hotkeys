@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mdscript name="al_wing_hotkeys" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="md.xsd">
 	<cues>
+		<cue name="OnLuaLoaderReady">
+	      <conditions>
+	        <event_ui_triggered screen="'Lua_Loader'" control="'Ready'" />
+	      </conditions>
+	      <actions>
+			<raise_lua_event name="'Lua_Loader.Load'" param="'extensions.al_wing_hotkeys.whk_extension_check'"/>
+			<raise_lua_event name="'Lua_Loader.Load'" param="'extensions.al_wing_hotkeys.whk_event_register'"/>
+	      </actions>
+	    </cue>
+	    <cue name="OnLuaLoaderReadyCompleted">
+	      <conditions>
+	        <event_cue_completed cue="OnLuaLoaderReady" />
+	      </conditions>
+	      <actions>
+	        <reset_cue cue="OnLuaLoaderReady" />
+	        <reset_cue cue="this" />
+	      </actions>
+	    </cue>
 		<cue name="alAWHK" namespace="this">
 			<conditions>
 				<check_any>
@@ -118,27 +136,6 @@
 									$callback = InteractMenu_OnRemoveOrdersWHK,
 									$echo='Wing: All'
 								]" />
-
-								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 2001}" comment="Wing: Remove First Order" />
-								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
-									$id = 'remove_first_order_whk',
-									$section = $section,
-									$text = $text,
-									$icon = 'order_waitforsignal',
-									$callback = InteractMenu_OnRemoveOrdersWHK,
-									$echo='Wing: First'
-								]" />
-
-								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 2002}" comment="Wing: Remove Last Order" />
-								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
-									$id = 'remove_last_order_whk',
-									$section = $section,
-									$text = $text,
-									$icon = 'order_waitforsignal',
-									$callback = InteractMenu_OnRemoveOrdersWHK,
-									$echo='Wing: Last'
-								]" />
-
 								
 								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 2003}" comment="Wing: Fly and Wait" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
@@ -429,21 +426,12 @@
 						<event_cue_signalled />
 					</conditions>
 					<actions>
-						<set_value name="$destobject" exact="event.param.$object" />
-						<set_value name="$destoffset" exact="event.param.$offset" />
-						<set_value name="$destoffsetcomponent" exact="event.param.$offsetcomponent" />
-						<set_value name="$destfinal" exact="[$destoffsetcomponent, $destoffset]" />
-						<set_value name="$movecat" exact="event.param.$echo" />
-							
 						<set_value name="$orderships" exact="@player.occupiedship.subordinatesingroup.{player.entity.$SelectedWingID}" />
 												
 						<do_for_each name="$ship" in="$orderships">
 							<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
 							<do_if value="$ship">
-								<create_order name="$order" object="$ship" id="'MoveWait'">
-									<param name="destination" value="$destfinal" />
-									<param name="debugchance" value="alAWHK.$debugChance" />
-								</create_order>
+								<raise_lua_event name="'whk_event_ClearOrders'" param="$ship + ';false;false;false'"/>
 							</do_if>
 						</do_for_each>
 						<reset_cue cue="this" />
