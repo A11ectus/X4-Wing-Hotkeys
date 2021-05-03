@@ -64,7 +64,7 @@
 						<do_if value="not $ship">
 							<set_value name="$section" exact="'main'" />						
 						
-							<do_if value="player.entity.$SelectedWing">
+							<do_if value="@player.entity.$SelectedWing">
 								<set_value name="$text" exact="{23811, 1000} + player.entity.$SelectedWing" comment="Clear Wing Slection: " />
 									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 										$id = 'order_select_clear_m',
@@ -125,7 +125,7 @@
 							</do_if>
 							
 							<!--Base Orders-->							
-							<do_if value="$target and player.entity.$SelectedWing and 
+							<do_if value="$target and @player.entity.$SelectedWing and 
 							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
 								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 2000}" comment="Wing: Remove All Orders" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
@@ -160,7 +160,7 @@
 							]" />
 							</do_if>	
 							
-							<do_if value="($target.isclass.ship or $target.isclass.spacesuit) and player.entity.$SelectedWing and 
+							<do_if value="($target.isclass.ship or $target.isclass.spacesuit) and @player.entity.$SelectedWing and 
 							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
 								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 2005}" comment="Wing: Follow until further notice" />
 									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
@@ -185,7 +185,7 @@
 								]" />
 							</do_if>	
 
-							<do_if value="$target and player.entity.$SelectedWing and 
+							<do_if value="$target and @player.entity.$SelectedWing and 
 							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
 								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 2007}" comment="Wing: Attack targets in range" />
 									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
@@ -199,7 +199,7 @@
 							</do_if>
 							
 							<!--Urgent Orders-->
-							<do_if value="player.entity.$WHK_AUO_Enabled and $target and player.entity.$SelectedWing and 
+							<do_if value="player.entity.$WHK_AUO_Enabled and $target and @player.entity.$SelectedWing and 
 							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
 								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 3001}" comment="Wing: Fly and Wait, Immediate" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
@@ -304,7 +304,7 @@
 														
 							<set_value name="$section" exact="'player_interaction'" />						
 							
-							<do_if value="player.entity.$SelectedWing">
+							<do_if value="@player.entity.$SelectedWing">
 								<set_value name="$text" exact="{23811, 1000} + player.entity.$SelectedWing" comment="Clear Wing Slection: " />
 									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 										$id = 'order_select_clear_pi',
@@ -391,10 +391,6 @@
 							<set_value name="player.entity.$SelectedWing" exact="null"/>
 							<set_value name="player.entity.$SelectedWingID" exact="null"/>
 						</do_else>
-
-						<debug_text text="'Wing Selected: ' + player.entity.$SelectedWing" chance="100" />						
-						<debug_text text="'Wing ID: ' + player.entity.$SelectedWingID" chance="100" />
-						<debug_text text="'Available Wings: ' + player.occupiedship.activesubordinategroupids" chance="100" />
 						
 						<reset_cue cue="this" />
 					</actions>
@@ -453,7 +449,7 @@
 						<do_for_each name="$ship" in="$orderships">
 							<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
 							<do_if value="$ship">
-								<raise_lua_event name="'whk_event_ClearOrders'" param="$ship + ';false;false;false'"/>
+								<raise_lua_event name="'whk_event_clearorders'" param="$ship + ';false;false;false'"/>
 							</do_if>
 						</do_for_each>
 						<reset_cue cue="this" />

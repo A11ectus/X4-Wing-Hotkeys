@@ -10,7 +10,7 @@ function init()
 
     menu = Lib.Get_Egosoft_Menu("MapMenu")
 
-    RegisterEvent(whk_event_Clear, whk.clearOrders)
+    RegisterEvent("whk_event_clearorders", whk.clearOrders)
 end
 
 function whk.clearOrders(_, params)
