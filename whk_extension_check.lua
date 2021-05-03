@@ -2,7 +2,6 @@
 local ffi = require("ffi") 
 local C = ffi.C 
 ffi.cdef[[ 
-	UniverseID GetPlayerObjectID(void);
  	UniverseID GetPlayerID(void);
  ]]
  
@@ -12,7 +11,6 @@ local function init()
 	local extensions = GetExtensionList()
 	local asto = false
 	local auo = false
-	--local playerObject = C.GetPlayerObjectID()
 	local playerID = ConvertStringTo64Bit(tostring(C.GetPlayerID()))
 	
     for _,extension in ipairs(extensions) do

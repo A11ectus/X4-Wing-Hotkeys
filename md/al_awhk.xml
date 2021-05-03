@@ -449,7 +449,7 @@
 						<do_for_each name="$ship" in="$orderships">
 							<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
 							<do_if value="$ship">
-								<raise_lua_event name="'whk_event_clearorders'" param="$ship + ';false;false;false'"/>
+								<raise_lua_event name="'whk_event_clearorders'" param="$ship"/>
 							</do_if>
 						</do_for_each>
 						<reset_cue cue="this" />
