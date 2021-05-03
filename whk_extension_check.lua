@@ -1,6 +1,10 @@
 -- ffi setup 
 local ffi = require("ffi") 
 local C = ffi.C 
+ffi.cdef[[ 
+	UniverseID GetPlayerObjectID(void);
+ 	UniverseID GetPlayerID(void);
+ ]]
  
 local function init() 
     DebugError("Wing Hotkeys: extension_check Init") 
@@ -8,16 +12,18 @@ local function init()
 	local extensions = GetExtensionList()
 	local asto = false
 	local auo = false
+	--local playerObject = C.GetPlayerObjectID()
+	local playerID = ConvertStringTo64Bit(tostring(C.GetPlayerID()))
 	
     for _,extension in ipairs(extensions) do
         if extension.id == "ws_2437198154" and tonumber(extension.version) >= 3.40 and extension.enabled == true then
-            DebugError("Found Subsystem Targeting Orders")
 			asto = true
         end
+		
         if extension.id == "ws_2459574093" and tonumber(extension.version) >= 1.20 and extension.enabled == true then
-            DebugError("Found Urgent Orders")
 			auo = true
-        end		
+        end
+		
 		if asto==true and auo==true then
 			break
 		end
@@ -25,14 +31,18 @@ local function init()
 		
 	if asto == true then
 	    DebugError("Wing Hotkeys: Enabling support for Subsystem Targeting Orders")
+		SetNPCBlackboard(playerID, "$WHK_STO_Enabled", true)
 	else
-		DebugError("Wing Hotkeys: Subsystem Targeting Orders not found, disabling support")
+		DebugError("Wing Hotkeys: Subsystem Targeting Orders >= v3.40 not found, disabling support")
+		SetNPCBlackboard(playerID, "$WHK_STO_Enabled", false)
 	end
 
 	if auo == true then
 	    DebugError("Wing Hotkeys: Enabling support for Urgent Orders")
+		SetNPCBlackboard(playerID, "$WHK_AUO_Enabled", true)
 	else
-		DebugError("Wing Hotkeys: Urgent Orders not found, disabling support")
+		DebugError("Wing Hotkeys: Urgent Orders >= v1.20 not found, disabling support")
+		SetNPCBlackboard(playerID, "$WHK_AUO_Enabled", false)
 	end
 		
 end 

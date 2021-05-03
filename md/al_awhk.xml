@@ -198,8 +198,8 @@
 									]" />
 							</do_if>
 							
-							<!--Urgent Orders-->
-							<do_if value="$target and player.entity.$SelectedWing and 
+							<!--Urgent Orders-->$WHK_AUO_Enabled
+							<do_if value="player.entity.$WHK_AUO_Enabled and $target and player.entity.$SelectedWing and 
 							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
 								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 3001}" comment="Wing: Fly and Wait, Immediate" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
@@ -272,7 +272,7 @@
 								]" />										
 							</do_if>
 							
-							<do_if value="@$target.dockingallowed.{@player.occupiedship} and @player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">	
+							<do_if value="player.entity.$WHK_AUO_Enabled and @$target.dockingallowed.{@player.occupiedship} and @player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">	
 								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 3008}" comment="Dock and Wait, Urgent" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_dock_urgent',
@@ -284,7 +284,7 @@
 								]" />
 							</do_if>
 							
-							<do_if value="($target.isclass.destructible) and (not ($target.owner == faction.player))  and @player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">	
+							<do_if value="player.entity.$WHK_AUO_Enabled and ($target.isclass.destructible) and (not ($target.owner == faction.player))  and @player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">	
 								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 3000}" comment="Attack, Immediate" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_attack_immediate',
