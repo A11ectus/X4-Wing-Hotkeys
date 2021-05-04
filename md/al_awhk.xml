@@ -305,13 +305,13 @@
 									<find_object_component name="$subsys" object="$target" class="class.engine" checkoperational="true" indestructible="false" invulnerable="false" integrated="false" multiple="false"/>	  
 									<do_if value="$subsys">
 										<set_value name="$disable_flag" exact="true" />
-										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {92015, 4000}" comment="Attack Engines" />
+										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 4000}" comment="Attack Engines" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_subsystem',
 											$section = $section,
 											$text = $text,
 											$icon = 'order_attack',
-											$callback = InteractMenu_OnAttackSubSys,
+											$callback = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
 											$echo='Wing: engines'
 										]" />
 									</do_if>
@@ -321,13 +321,13 @@
 									<find_object_component name="$subsys" object="$target" class="class.shieldgenerator" checkoperational="true" indestructible="false" invulnerable="false" integrated="false" multiple="false"  tags="[tag.large, tag.extralarge]"/>	  
 									<do_if value="$subsys">
 										<set_value name="$disable_flag" exact="true" />
-										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {92015, 4001}" comment="Attack Shields" />
+										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 4001}" comment="Attack Shields" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_shields',
 											$section = $section,
 											$text = $text,
 											$icon = 'order_attack',
-											$callback = InteractMenu_OnAttackSubSys,
+											$callback = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
 											$echo='Wing: shields'
 										]" />
 									</do_if>
@@ -335,13 +335,13 @@
 									<find_object_component name="$subsys" object="$target" class="[class.turret]" checkoperational="true" indestructible="false" invulnerable="false" integrated="false" multiple="false" tags="[tag.small, tag.medium]"/>	
 									<do_if value="$subsys">
 										<set_value name="$disable_flag" exact="true" />
-										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {92015, 4002}" comment="Attack M Turrets" />
+										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 4002}" comment="Attack M Turrets" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_m_turrets',
 											$section = $section,
 											$text = $text,
 											$icon = 'order_attack',
-											$callback = InteractMenu_OnAttackSubSys,
+											$callback = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
 											$echo='Wing: weps_m'
 										]" />
 									</do_if>
@@ -349,13 +349,13 @@
 									<find_object_component name="$subsys" object="$target" class="[class.turret]" checkoperational="true" indestructible="false" invulnerable="false" integrated="false" multiple="false" tags="[tag.large, tag.extralarge]"/>										
 									<do_if value="$subsys">
 										<set_value name="$disable_flag" exact="true" />
-										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {92015, 4003}" comment="Attack L Turrets" />
+										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 4003}" comment="Attack L Turrets" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_l_turrets',
 											$section = $section,
 											$text = $text,
 											$icon = 'order_attack',
-											$callback = InteractMenu_OnAttackSubSys,
+											$callback = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
 											$echo='Wing: weps_l'
 										]" />					
 									</do_if>
@@ -363,13 +363,13 @@
 									<find_object_component name="$subsys" object="$target" class="[class.missileturret]" checkoperational="true" indestructible="false" invulnerable="false" integrated="false" multiple="false"/>	  											
 									<do_if value="$subsys">
 										<set_value name="$disable_flag" exact="true" />
-										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {92015, 4004}" comment="Attack Miss Turrets" />
+										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 4004}" comment="Attack Miss Turrets" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_missturr',
 											$section = $section,
 											$text = $text,
 											$icon = 'order_attack',
-											$callback = InteractMenu_OnAttackSubSys,
+											$callback = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
 											$echo='Wing: missiles'
 										]" />
 									</do_if>
@@ -379,25 +379,25 @@
 									</find_object_component>
 									<do_if value="$subsys">
 										<set_value name="$disable_flag" exact="true" />
-										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {92015, 4005}" comment="Attack Main Batteries" />
+										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 4005}" comment="Attack Main Batteries" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_batteries',
 											$section = $section,
 											$text = $text,
 											$icon = 'order_attack',
-											$callback = InteractMenu_OnAttackSubSys,
+											$callback = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
 											$echo='Wing: batteries'
 										]" />					
 									</do_if>
 									
 									<do_if value="$disable_flag">
-										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {92015, 4006}" comment="Disable" />
+										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 4006}" comment="Disable" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_disable',
 											$section = $section,
 											$text = $text,
 											$icon = 'order_attack',
-											$callback = InteractMenu_OnAttackSubSys,
+											$callback = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
 											$echo='Wing: disable'
 										]" />					
 									</do_if>
@@ -408,13 +408,13 @@
 										<match state="componentstate.wreck" negate="true"/>
 									</find_object_component>									
 									<do_if value="$subsys">
-										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {92015, 4007}" comment="Attack Station Docks" />
+										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 4007}" comment="Attack Station Docks" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_stationdocks',
 											$section = $section,
 											$text = $text,
 											$icon = 'order_attack',
-											$callback = InteractMenu_OnAttackSubSys,
+											$callback = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
 											$echo='Wing: stationdocks'
 										]" />
 									</do_if>
@@ -423,13 +423,13 @@
 										<match state="componentstate.wreck" negate="true"/>
 									</find_object_component>															
 									<do_if value="$subsys">
-										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {92015, 4008}" comment="Attack Station Storage" />
+										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 4008}" comment="Attack Station Storage" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_stationstorage',
 											$section = $section,
 											$text = $text,
 											$icon = 'order_attack',
-											$callback = InteractMenu_OnAttackSubSys,
+											$callback = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
 											$echo='Wing: stationstorage'
 										]" />
 									</do_if>
@@ -438,13 +438,13 @@
 										<match state="componentstate.wreck" negate="true"/>
 									</find_object_component>									
 									<do_if value="$subsys">
-										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {92015, 4009}" comment="Attack Station Production" />
+										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 4009}" comment="Attack Station Production" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_stationproduction',
 											$section = $section,
 											$text = $text,
 											$icon = 'order_attack',
-											$callback = InteractMenu_OnAttackSubSys,
+											$callback = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
 											$echo='Wing: stationproduction'
 										]" />
 									</do_if>
@@ -453,13 +453,13 @@
 										<match state="componentstate.wreck" negate="true"/>
 									</find_object_component>													
 									<do_if value="$subsys">
-										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {92015, 4010}" comment="Attack Station Def. Platforms" />
+										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 4010}" comment="Attack Station Def. Platforms" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_stationdefense',
 											$section = $section,
 											$text = $text,
 											$icon = 'order_attack',
-											$callback = InteractMenu_OnAttackSubSys,
+											$callback = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
 											$echo='Wing: stationdefense'
 										]" />			
 									</do_if>
@@ -468,13 +468,13 @@
 										<match state="componentstate.wreck" negate="true"/>
 									</find_object_component>													
 									<do_if value="$subsys">
-										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {92015, 4011}" comment="Attack Station Shipyard Platforms" />
+										<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 4011}" comment="Attack Station Shipyard Platforms" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_stationbuild',
 											$section = $section,
 											$text = $text,
 											$icon = 'order_attack',
-											$callback = InteractMenu_OnAttackSubSys,
+											$callback = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
 											$echo='Wing: stationbuild'
 										]" />			
 									</do_if>
@@ -484,13 +484,13 @@
 						
 							<do_if value="player.entity.$WHK_STO_Enabled and @player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
 								
-								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {92015, 4012}" comment="Clear Turret Subsystem Target" />
+								<set_value name="$text" exact="player.entity.$SelectedWing + ' ' + {23811, 4012}" comment="Clear Turret Subsystem Target" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'action_clear_turret_subsys_pref',
 									$section = $section,
 									$text = $text,
 									$icon = 'order_lasertower',
-									$callback = InteractMenu_OnClearTurretPrefs
+									$callback = md.al_subsystem_targeting_orders.InteractMenu_OnClearTurretPrefs
 									$echo='Wing: clearturretsubyspref'
 								]" />
 							</do_if>
