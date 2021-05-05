@@ -41,6 +41,8 @@
 					<actions>
 						<debug_text text="'$debugChance: ' + $debugChance" />
 
+						<set_value name="player.entity.$SelectedFleet" exact="'Plr'"/>
+						
 						<reset_cue cue="this" />
 					</actions>
 				</cue>
@@ -59,13 +61,83 @@
 						<set_value name="$target" exact="@event.param.$object" />
 						<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
 						
+						<signal_cue_instantly cue="Update_Player_Commander" />
+						
 						<!--Wing Selection-->
+						<!--
+						<datatype name="controllable" type="object">
+							<property name="commanderentity" result="Commander entity (if this is a subordinate)" type="entity" />
+							<property name="commander" result="Commander object (if this is a subordinate)" type="controllable" />
+							<property name="fleet.iscommander" result="True if object is commander of its own fleet" type="boolean"/>
+							<property name="fleet.commander" result="Fleet commander object (top level fleet, null if that commander is not a fleet commader, e.g. is a unit or not player owned)" type="controllable"/>						
+						-->
+						
+						<do_if value="@$target.fleet.iscommander and @$target.owner == faction.player">
+							<set_value name="$section" exact="'main'" />						
+							
+							<set_value name="$text" exact="{23811, 2001}" comment="Set Flt-1" />
+								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
+									$id = 'order_set_1stfleet_m',
+									$section = $section,
+									$text = $text,
+									$icon = 'order_assigncommander',
+									$callback = InteractMenu_OnSetFleet,
+									$echo='Flt-1'
+								]" />					
+								
+							<set_value name="$text" exact="{23811, 2002}" comment="Set Flt-2" />
+								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
+									$id = 'order_set_2ndfleet_m',
+									$section = $section,
+									$text = $text,
+									$icon = 'order_assigncommander',
+									$callback = InteractMenu_OnSetFleet,
+									$echo='Flt-2'
+								]" />					
+
+						</do_if>
 						
 						<do_if value="not $ship">
 							<set_value name="$section" exact="'main'" />						
 						
+							<do_if value="@player.entity.$SelectedFleet != 'Plr'">
+								<set_value name="$text" exact="{23811, 2000} + player.entity.$SelectedFleet" comment="Clear Fleet Selection: " />
+									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
+										$id = 'order_select_fleet_clear_m',
+										$section = $section,
+										$text = $text,
+										$icon = 'order_recycle',
+										$callback = InteractMenu_OnSelectFleet,
+										$echo='Clear'
+									]" />							
+							</do_if>
+						
+							<do_if value="@player.entity.$SelectedFleet != 'Flt-1' and @player.entity.$FirstFleet">
+								<set_value name="$text" exact="{23811, 2003}" comment="Select Flt-1" />
+									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
+										$id = 'order_select_1stfleet_m',
+										$section = $section,
+										$text = $text,
+										$icon = 'order_assigncommander',
+										$callback = InteractMenu_OnSelectFleet,
+										$echo='Flt-1'
+									]" />
+							</do_if>
+
+							<do_if value="@player.entity.$SelectedFleet != 'Flt-2' and @player.entity.$SecondFleet">
+								<set_value name="$text" exact="{23811, 2004}" comment="Select Flt-2" />
+									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
+										$id = 'order_select_2ndfleet_m',
+										$section = $section,
+										$text = $text,
+										$icon = 'order_assigncommander',
+										$callback = InteractMenu_OnSelectFleet,
+										$echo='Flt-2'
+									]" />
+							</do_if>
+							
 							<do_if value="@player.entity.$SelectedWing">
-								<set_value name="$text" exact="{23811, 1000} + player.entity.$SelectedWing" comment="Clear Wing Slection: " />
+								<set_value name="$text" exact="{23811, 1000} + player.entity.$SelectedWing" comment="Clear Wing Selection: " />
 									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 										$id = 'order_select_clear_m',
 										$section = $section,
@@ -76,7 +148,7 @@
 									]" />							
 							</do_if>
 
-							<do_if value="@player.entity.$SelectedWing != 'Alpha' and @player.occupiedship.activesubordinategroupids.indexof.{1}">
+							<do_if value="@player.entity.$SelectedWing != 'A' and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{1}">
 								<set_value name="$text" exact="{23811, 1001}" comment="Select Alpha Wing" />
 									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 										$id = 'order_select_alpha_m',
@@ -84,11 +156,11 @@
 										$text = $text,
 										$icon = 'order_assigncommander',
 										$callback = InteractMenu_OnSelectWing,
-										$echo='Alpha'
+										$echo='A'
 									]" />
 							</do_if>
 								
-							<do_if value="@player.entity.$SelectedWing != 'Beta' and @player.occupiedship.activesubordinategroupids.indexof.{2}">
+							<do_if value="@player.entity.$SelectedWing != 'B' and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{2}">
 								<set_value name="$text" exact="{23811, 1002}" comment="Select Beta Wing" />
 									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 										$id = 'order_select_beta_m',
@@ -96,11 +168,11 @@
 										$text = $text,
 										$icon = 'order_assigncommander',
 										$callback = InteractMenu_OnSelectWing,
-										$echo='Beta'
+										$echo='B'
 									]" />
 							</do_if>
 								
-							<do_if value="@player.entity.$SelectedWing != 'Gamma' and @player.occupiedship.activesubordinategroupids.indexof.{3}">
+							<do_if value="@player.entity.$SelectedWing != 'G' and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{3}">
 								<set_value name="$text" exact="{23811, 1003}" comment="Select Gamma Wing" />
 									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 										$id = 'order_select_gamma_m',
@@ -108,11 +180,11 @@
 										$text = $text,
 										$icon = 'order_assigncommander',
 										$callback = InteractMenu_OnSelectWing,
-										$echo='Gamma'
+										$echo='G'
 									]" />								
 							</do_if>
 								
-							<do_if value="@player.entity.$SelectedWing != 'Delta' and @player.occupiedship.activesubordinategroupids.indexof.{4}">
+							<do_if value="@player.entity.$SelectedWing != 'D' and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{4}">
 								<set_value name="$text" exact="{23811, 1004}" comment="Select Delta Wing" />
 									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 										$id = 'order_select_delta_m',
@@ -120,14 +192,14 @@
 										$text = $text,
 										$icon = 'order_assigncommander',
 										$callback = InteractMenu_OnSelectWing,
-										$echo='Delta'
+										$echo='D'
 									]" />	
 							</do_if>
 							
 							<!--Base Orders-->							
 							<do_if value="$target and @player.entity.$SelectedWing and 
-							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {1001, 7832}" comment="Wing: Remove All Orders" />
+							@player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1001, 7832}" comment="Wing: Remove All Orders" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_remove_all_orders_whk',
 									$section = $section,
@@ -137,7 +209,7 @@
 									$echo='Wing: All'
 								]" />
 								
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {1041, 251}" comment="Wing: Fly and Wait" />
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 251}" comment="Wing: Fly and Wait" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_move_whk',
 									$section = $section,
@@ -148,8 +220,8 @@
 								]" />
 							</do_if>
 							
-							<do_if value="@$target.dockingallowed.{@player.occupiedship} and @player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">	
-							<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {1041, 451}" comment="Wing: Dock and Wait" />
+							<do_if value="@$target.dockingallowed.{@player.occupiedship} and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">	
+							<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 451}" comment="Wing: Dock and Wait" />
 							<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 								$id = 'order_dock_whk',
 								$section = $section,
@@ -161,8 +233,8 @@
 							</do_if>	
 							
 							<do_if value="($target.isclass.ship or $target.isclass.spacesuit) and @player.entity.$SelectedWing and 
-							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {1041, 371}" comment="Wing: Protect Ship" />
+							@player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 371}" comment="Wing: Protect Ship" />
 									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 										$id = 'order_follow_whk',
 										$section = $section,
@@ -173,8 +245,8 @@
 									]" />
 							</do_if>
 							<do_elseif value="$target.isclass.station and @player.entity.$SelectedWing and 
-							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {1041, 361}" comment="Wing: Protect Station" />
+							@player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 361}" comment="Wing: Protect Station" />
 									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 										$id = 'order_follow_whk',
 										$section = $section,
@@ -185,8 +257,8 @@
 									]" />
 							</do_elseif>
 							<do_elseif value="$target and @player.entity.$SelectedWing and 
-							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {1041, 381}" comment="Wing: Protect Position" />
+							@player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 381}" comment="Wing: Protect Position" />
 									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 										$id = 'order_follow_whk',
 										$section = $section,
@@ -197,8 +269,8 @@
 									]" />
 							</do_elseif>
 							
-							<do_if value="($target.isclass.destructible) and (not ($target.owner == faction.player))  and @player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">	
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {1041, 431}" comment="Wing: Attack" />
+							<do_if value="($target.isclass.destructible) and (not ($target.owner == faction.player))  and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">	
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 431}" comment="Wing: Attack" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_attack_whk',
 									$section = $section,
@@ -210,8 +282,8 @@
 							</do_if>	
 
 							<do_if value="$target and @player.entity.$SelectedWing and 
-							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {1041, 631}" comment="Wing: Attack targets in range" />
+							@player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 631}" comment="Wing: Attack targets in range" />
 									<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 										$id = 'order_attackinrange_whk',
 										$section = $section,
@@ -224,8 +296,8 @@
 							
 							<!--Urgent Orders-->
 							<do_if value="player.entity.$WHK_AUO_Enabled and $target and @player.entity.$SelectedWing and 
-							@player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {12115, 2001}" comment="Wing: Fly and Wait, Immediate" />
+							@player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {12115, 2001}" comment="Wing: Fly and Wait, Immediate" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_move_immediate',
 									$section = $section,
@@ -235,7 +307,7 @@
 									$echo='Wing: Immediate'
 								]" />
 
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {12115, 2002}" comment="Wing: Fly and Wait, Immediate/Same Plane" />
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {12115, 2002}" comment="Wing: Fly and Wait, Immediate/Same Plane" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_move_immediatesameplane',
 									$section = $section,
@@ -245,7 +317,7 @@
 									$echo='Wing: Immediate / Same Plane'
 								]" />
 
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {12115, 2003}" comment="Wing: Fly and Wait, Same Plane" />
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {12115, 2003}" comment="Wing: Fly and Wait, Same Plane" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_move_sameplane',
 									$section = $section,
@@ -255,7 +327,7 @@
 									$echo='Wing: Same Plane'
 								]" />
 								
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {12115, 2004}" comment="Wing: Fly and Wait, No Recall" />
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {12115, 2004}" comment="Wing: Fly and Wait, No Recall" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_move_norecall',
 									$section = $section,
@@ -265,7 +337,7 @@
 									$echo='Wing: No Recall'
 								]" />
 
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {12115, 2005}" comment="Wing: Fly and Wait, No Recall/Same Plane" />
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {12115, 2005}" comment="Wing: Fly and Wait, No Recall/Same Plane" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_move_norecallsameplane',
 									$section = $section,
@@ -275,7 +347,7 @@
 									$echo='Wing: No Recall / Same Plane'
 								]" />							
 
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {12115, 2006}" comment="Wing: Fly and Wait, Urgent" />
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {12115, 2006}" comment="Wing: Fly and Wait, Urgent" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_move_urgent',
 									$section = $section,
@@ -285,7 +357,7 @@
 									$echo='Wing: Urgent'
 								]" />															
 								
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {12115, 2007}" comment="Wing: Fly and Wait, Urgent/Same Plane" />
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {12115, 2007}" comment="Wing: Fly and Wait, Urgent/Same Plane" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_move_urgentsameplane',
 									$section = $section,
@@ -296,8 +368,8 @@
 								]" />										
 							</do_if>
 							
-							<do_if value="player.entity.$WHK_AUO_Enabled and @$target.dockingallowed.{@player.occupiedship} and @player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">	
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {12115, 2008}" comment="Wing: Dock and Wait, Urgent" />
+							<do_if value="player.entity.$WHK_AUO_Enabled and @$target.dockingallowed.{@player.occupiedship} and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">	
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {12115, 2008}" comment="Wing: Dock and Wait, Urgent" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_dock_urgent',
 									$section = $section,
@@ -308,8 +380,8 @@
 								]" />
 							</do_if>
 							
-							<do_if value="player.entity.$WHK_AUO_Enabled and ($target.isclass.destructible) and (not ($target.owner == faction.player))  and @player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">	
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {12115, 2000}" comment="Wing: Attack, Immediate" />
+							<do_if value="player.entity.$WHK_AUO_Enabled and ($target.isclass.destructible) and (not ($target.owner == faction.player))  and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">	
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {12115, 2000}" comment="Wing: Attack, Immediate" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'order_attack_immediate',
 									$section = $section,
@@ -322,14 +394,14 @@
 							
 							<!--Subsystem Targeting Orders-->
 														
-							<do_if value="player.entity.$WHK_STO_Enabled and ($target.isclass.ship or $target.isclass.station) and (not ($target.owner == faction.player))  and @player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">	
+							<do_if value="player.entity.$WHK_STO_Enabled and ($target.isclass.ship or $target.isclass.station) and (not ($target.owner == faction.player))  and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">	
 								<set_value name="$disable_flag" exact="false" />
 								
 								<do_if value="@$target.iscapitalship">
 									<find_object_component name="$subsys" object="$target" class="class.engine" checkoperational="true" indestructible="false" invulnerable="false" integrated="false" multiple="false"/>	  
 									<do_if value="$subsys">
 										<set_value name="$disable_flag" exact="true" />
-										<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {92015, 2000}" comment="Wing: Attack Engines" />
+										<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {92015, 2000}" comment="Wing: Attack Engines" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_subsystem',
 											$section = $section,
@@ -345,7 +417,7 @@
 									<find_object_component name="$subsys" object="$target" class="class.shieldgenerator" checkoperational="true" indestructible="false" invulnerable="false" integrated="false" multiple="false"  tags="[tag.large, tag.extralarge]"/>	  
 									<do_if value="$subsys">
 										<set_value name="$disable_flag" exact="true" />
-										<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {92015, 2001}" comment="Wing: Attack Shields" />
+										<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {92015, 2001}" comment="Wing: Attack Shields" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_shields',
 											$section = $section,
@@ -359,7 +431,7 @@
 									<find_object_component name="$subsys" object="$target" class="[class.turret]" checkoperational="true" indestructible="false" invulnerable="false" integrated="false" multiple="false" tags="[tag.small, tag.medium]"/>	
 									<do_if value="$subsys">
 										<set_value name="$disable_flag" exact="true" />
-										<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {92015, 2002}" comment="Wing: Attack M Turrets" />
+										<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {92015, 2002}" comment="Wing: Attack M Turrets" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_m_turrets',
 											$section = $section,
@@ -373,7 +445,7 @@
 									<find_object_component name="$subsys" object="$target" class="[class.turret]" checkoperational="true" indestructible="false" invulnerable="false" integrated="false" multiple="false" tags="[tag.large, tag.extralarge]"/>										
 									<do_if value="$subsys">
 										<set_value name="$disable_flag" exact="true" />
-										<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {92015, 2003}" comment="Wing: Attack L Turrets" />
+										<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {92015, 2003}" comment="Wing: Attack L Turrets" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_l_turrets',
 											$section = $section,
@@ -387,7 +459,7 @@
 									<find_object_component name="$subsys" object="$target" class="[class.missileturret]" checkoperational="true" indestructible="false" invulnerable="false" integrated="false" multiple="false"/>	  											
 									<do_if value="$subsys">
 										<set_value name="$disable_flag" exact="true" />
-										<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {92015, 2004}" comment="Wing: Attack Miss Turrets" />
+										<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {92015, 2004}" comment="Wing: Attack Miss Turrets" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_missturr',
 											$section = $section,
@@ -403,7 +475,7 @@
 									</find_object_component>
 									<do_if value="$subsys">
 										<set_value name="$disable_flag" exact="true" />
-										<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {92015, 2005}" comment="Wing: Attack Main Batteries" />
+										<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {92015, 2005}" comment="Wing: Attack Main Batteries" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_batteries',
 											$section = $section,
@@ -415,7 +487,7 @@
 									</do_if>
 									
 									<do_if value="$disable_flag">
-										<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {92015, 2006}" comment="Wing: Disable" />
+										<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {92015, 2006}" comment="Wing: Disable" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_disable',
 											$section = $section,
@@ -432,7 +504,7 @@
 										<match state="componentstate.wreck" negate="true"/>
 									</find_object_component>									
 									<do_if value="$subsys">
-										<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {92015, 2007}" comment="Wing: Attack Station Docks" />
+										<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {92015, 2007}" comment="Wing: Attack Station Docks" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_stationdocks',
 											$section = $section,
@@ -447,7 +519,7 @@
 										<match state="componentstate.wreck" negate="true"/>
 									</find_object_component>															
 									<do_if value="$subsys">
-										<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {92015, 2008}" comment="Wing: Attack Station Storage" />
+										<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {92015, 2008}" comment="Wing: Attack Station Storage" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_stationstorage',
 											$section = $section,
@@ -462,7 +534,7 @@
 										<match state="componentstate.wreck" negate="true"/>
 									</find_object_component>									
 									<do_if value="$subsys">
-										<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {92015, 2009}" comment="Wing: Attack Station Production" />
+										<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {92015, 2009}" comment="Wing: Attack Station Production" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_stationproduction',
 											$section = $section,
@@ -477,7 +549,7 @@
 										<match state="componentstate.wreck" negate="true"/>
 									</find_object_component>													
 									<do_if value="$subsys">
-										<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {92015, 2010}" comment="Wing: Attack Station Def. Platforms" />
+										<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {92015, 2010}" comment="Wing: Attack Station Def. Platforms" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_stationdefense',
 											$section = $section,
@@ -492,7 +564,7 @@
 										<match state="componentstate.wreck" negate="true"/>
 									</find_object_component>													
 									<do_if value="$subsys">
-										<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + {92015, 2011}" comment="Wing: Attack Station Shipyard Platforms" />
+										<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {92015, 2011}" comment="Wing: Attack Station Shipyard Platforms" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 											$id = 'order_attack_stationbuild',
 											$section = $section,
@@ -506,15 +578,15 @@
 								</do_if>
 							</do_if>						
 						
-							<do_if value="player.entity.$WHK_STO_Enabled and @player.occupiedship.activesubordinategroupids.indexof.{player.entity.$SelectedWingID}">
+							<do_if value="player.entity.$WHK_STO_Enabled and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">
 								
-								<set_value name="$text" exact="player.entity.$SelectedWing + ': ' + 92015, 2012}" comment="Wing: Clear Turret Subsystem Target" />
+								<set_value name="$text" exact="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {92015, 2012}" comment="Wing: Clear Turret Subsystem Target" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
 									$id = 'action_clear_turret_subsys_pref',
 									$section = $section,
 									$text = $text,
 									$icon = 'order_lasertower',
-									$callback = md.al_subsystem_targeting_orders.InteractMenu_OnClearTurretPrefs
+									$callback = md.al_subsystem_targeting_orders.InteractMenu_OnClearTurretPrefs,
 									$echo='Wing: clearturretsubyspref'
 								]" />
 							</do_if>
@@ -522,7 +594,7 @@
 						</do_if>
 						
 						<!--Wing Selection-->
-						
+						<!--
 						<do_if value="$ship and $ship.owner == faction.player">
 														
 							<set_value name="$section" exact="'player_interaction'" />						
@@ -585,12 +657,73 @@
 										$callback = InteractMenu_OnSelectWing,
 										$echo='Delta'
 									]" />																		
-							</do_if>
-																		
+							</do_if>										
 						</do_if>
+						-->	
 						<cancel_cue cue="this" />
 					</actions>
 				</cue>
+				<cue name="Update_Player_Commander">				
+					<conditions>
+						<event_cue_signalled />
+					</conditions>
+					<actions>
+						<do_if value="player.entity.$SelectedFleet == 'Plr'">
+							<do_if value="@player.occupiedship.fleet.iscommander">
+								<set_value name="player.entity.$SelectedFleetCommander" exact="player.occupiedship" />
+							</do_if>
+							<do_else>
+								<set_value name="player.entity.$SelectedFleetCommander" exact="player.occupiedship.commander" />
+							</do_else>
+						</do_if>
+						<reset_cue cue="this" />
+					</actions>
+				</cue>
+				<cue name="InteractMenu_OnSetFleet">
+					<conditions>
+						<event_cue_signalled />
+					</conditions>
+					<actions>
+						<set_value name="$target" exact="event.param.$object" />
+						<set_value name="$setfleet" exact="event.param.$echo"/>
+						
+						<do_if value="$setfleet == 'Flt-1'">
+							<set_value name="player.entity.$FirstFleet" exact="$target"/>
+						</do_if>
+						<do_elseif value="$setfleet == 'Flt-2'">
+							<set_value name="player.entity.$SecondFleet" exact="$target"/>
+						</do_elseif>
+						
+						<reset_cue cue="this" />
+					</actions>
+				</cue>
+				<cue name="InteractMenu_OnSelectFleet">
+					<conditions>
+						<event_cue_signalled />
+					</conditions>
+					<actions>
+					
+						<do_if value="player.entity.$SelectedFleet != event.param.$echo">
+							<set_value name="player.entity.$SelectedWing" exact="null"/>
+							<set_value name="player.entity.$SelectedWingID" exact="null"/>
+						</do_if>
+					
+						<set_value name="player.entity.$SelectedFleet" exact="event.param.$echo"/>
+						
+						<do_if value="player.entity.$SelectedFleet == 'Flt-1'">
+							<set_value name="player.entity.$SelectedFleetCommander" exact="player.entity.$FirstFleet"/>
+						</do_if>
+						<do_elseif value="player.entity.$SelectedFleet == 'Flt-2'">
+							<set_value name="player.entity.$SelectedFleetCommander" exact="player.entity.$SecondFleet"/>
+						</do_elseif>
+						<do_else> <!--Implicitly captures 'clear' command as well-->
+							<set_value name="player.entity.$SelectedFleet" exact="'Plr'"/>
+							<signal_cue_instantly cue="Update_Player_Commander" />
+						</do_else>
+						
+						<reset_cue cue="this" />
+					</actions>
+				</cue>				
 				<cue name="InteractMenu_OnSelectWing">
 					<conditions>
 						<event_cue_signalled />
@@ -598,16 +731,16 @@
 					<actions>
 						<set_value name="player.entity.$SelectedWing" exact="event.param.$echo"/>
 						
-						<do_if value="player.entity.$SelectedWing == 'Alpha'">
+						<do_if value="player.entity.$SelectedWing == 'A'">
 							<set_value name="player.entity.$SelectedWingID" exact="1"/>
 						</do_if>
-						<do_elseif value="player.entity.$SelectedWing == 'Beta'">
+						<do_elseif value="player.entity.$SelectedWing == 'B'">
 							<set_value name="player.entity.$SelectedWingID" exact="2"/>
 						</do_elseif>
-						<do_elseif value="player.entity.$SelectedWing == 'Gamma'">
+						<do_elseif value="player.entity.$SelectedWing == 'G'">
 							<set_value name="player.entity.$SelectedWingID" exact="3"/>
 						</do_elseif>
-						<do_elseif value="player.entity.$SelectedWing == 'Delta'">
+						<do_elseif value="player.entity.$SelectedWing == 'D'">
 							<set_value name="player.entity.$SelectedWingID" exact="4"/>
 						</do_elseif>
 						<do_else> <!--Implicitly captures 'clear' command as well-->
@@ -626,7 +759,7 @@
 						<set_value name="$target" exact="event.param.$object" />
 						<set_value name="$attackcat" exact="event.param.$echo" />
 						
-						<set_value name="$orderships" exact="@player.occupiedship.subordinatesingroup.{player.entity.$SelectedWingID}" />
+						<set_value name="$orderships" exact="@player.entity.$SelectedFleetCommander.subordinatesingroup.{@player.entity.$SelectedWingID}" />
 						
 						<do_for_each name="$ship" in="@$orderships">						
 							<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
@@ -648,7 +781,7 @@
 						<set_value name="$target" exact="event.param.$object" />
 						<set_value name="$protectcat" exact="event.param.$echo" />
 						
-						<set_value name="$orderships" exact="@player.occupiedship.subordinatesingroup.{player.entity.$SelectedWingID}" />
+						<set_value name="$orderships" exact="@player.entity.$SelectedFleetCommander.subordinatesingroup.{@player.entity.$SelectedWingID}" />
 						
 						<do_if value="$protectcat == 'Wing: Protect Ship'">
 							<do_for_each name="$ship" in="@$orderships">						
@@ -699,7 +832,8 @@
 						<event_cue_signalled />
 					</conditions>
 					<actions>
-						<set_value name="$orderships" exact="@player.occupiedship.subordinatesingroup.{player.entity.$SelectedWingID}" />
+						<signal_cue_instantly cue="Update_Player_Commander" />
+						<set_value name="$orderships" exact="@player.entity.$SelectedFleetCommander.subordinatesingroup.{@player.entity.$SelectedWingID}" />
 												
 						<do_for_each name="$ship" in="$orderships">
 							<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
@@ -721,7 +855,8 @@
 						<set_value name="$destfinal" exact="[$destoffsetcomponent, $destoffset]" />
 						<set_value name="$movecat" exact="event.param.$echo" />
 							
-						<set_value name="$orderships" exact="@player.occupiedship.subordinatesingroup.{player.entity.$SelectedWingID}" />
+						<signal_cue_instantly cue="Update_Player_Commander" />
+						<set_value name="$orderships" exact="@player.entity.$SelectedFleetCommander.subordinatesingroup.{@player.entity.$SelectedWingID}" />
 												
 						<do_for_each name="$ship" in="$orderships">
 							<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
@@ -746,7 +881,7 @@
 						<set_value name="$destfinal" exact="[$destoffsetcomponent, $destoffset]" />
 						<set_value name="$attackcat" exact="event.param.$echo" />
 							
-						<set_value name="$orderships" exact="@player.occupiedship.subordinatesingroup.{player.entity.$SelectedWingID}" />
+						<set_value name="$orderships" exact="@player.entity.$SelectedFleetCommander.subordinatesingroup.{@player.entity.$SelectedWingID}" />
 												
 						<do_for_each name="$ship" in="$orderships">
 							<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
@@ -768,7 +903,7 @@
 						<set_value name="$destfinal" exact="event.param.$object" />
 						<set_value name="$dockcat" exact="event.param.$echo" />
 
-						<set_value name="$orderships" exact="@player.occupiedship.subordinatesingroup.{player.entity.$SelectedWingID}" />
+						<set_value name="$orderships" exact="@player.entity.$SelectedFleetCommander.subordinatesingroup.{@player.entity.$SelectedWingID}" />
 												
 						<do_for_each name="$ship" in="@$orderships">						
 							<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />

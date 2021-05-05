@@ -97,3 +97,5 @@ voice\PAGEID\normal
 <do_else>
 	<set_value name="$myid" exact="null"/>
 </do_else>
+
+Select options appearing on select self

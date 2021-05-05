@@ -13,5 +13,10 @@
 		<t id="1002">Select Beta Wing</t>
 		<t id="1003">Select Gamma Wing</t>
 		<t id="1004">Select Delta Wing</t>
+		<t id="2000">Clear Fleet Selection: </t>
+		<t id="2001">Set 1st Fleet</t>	
+		<t id="2002">Set 2nd Fleet</t>	
+		<t id="2003">Select 1st Fleet</t>	
+		<t id="2004">Select 2nd Fleet</t>	
 	</page>
 </language>
