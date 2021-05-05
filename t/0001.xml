@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?> 
 <!-- english -->  
 <language>
-	<!-- "Allectus: Urgent Orders" = "AWHK" = "1 23 8 11" = "23811" in  https://www.boxentriq.com/code-breaking/letters-to-numbers -->
+	<!-- "Allectus: Wing Hotkeys" = "AWHK" = "1 23 8 11" = "23811" in  https://www.boxentriq.com/code-breaking/letters-to-numbers -->
 	<page id="23811" voice="no">
 		<t id="1">Allectus: Wing Hotkeys</t>
 		<!-- config -->
@@ -13,38 +13,5 @@
 		<t id="1002">Select Beta Wing</t>
 		<t id="1003">Select Gamma Wing</t>
 		<t id="1004">Select Delta Wing</t>
-		<!-- Orders -->		
-		<t id="2000">: Remove All Orders</t>		
-		<t id="2001">: Remove First Order</t>		
-		<t id="2002">: Remove Last Order</t>		
-		<t id="2003">: Fly and Wait</t>
-		<t id="2004">: Dock and Wait</t>
-		<t id="2005">: Follow until further notice</t>
-		<t id="2006">: Attack</t>
-		<t id="2007">: Attack targets in range</t>
-		<!-- Urgent Orders -->		
-		<t id="3000">: Attack, Immediate</t>
-		<t id="3001">: Fly and Wait, Immediate</t>
-		<t id="3002">: Fly and Wait, Immediate/Same Plane</t>
-		<t id="3003">: Fly and Wait, Same Plane</t>
-		<t id="3004">: Fly and Wait, No Recall</t>
-		<t id="3005">: Fly and Wait, No Recall/Same Plane</t>
-		<t id="3006">: Fly and Wait, Urgent</t>
-		<t id="3007">: Fly and Wait, Urgent/Same Plane</t>
-		<t id="3008">: Dock and Wait, Urgent</t>
-		<!-- Subsystem Targeting Orders -->
-		<t id="4000">: Attack Engines</t>
-		<t id="4001">: Attack Shields</t>
-		<t id="4002">: Attack Weps, Med Turrets</t>
-		<t id="4003">: Attack Weps, Hvy Turrets</t>
-		<t id="4004">: Attack Weps, Missile Launchers</t>
-		<t id="4005">: Attack Weps, Main Batteries</t>		
-		<t id="4006">: Attack Subs, Disable All</t>		
-		<t id="4007">: Attack Station Docks</t>
-		<t id="4008">: Attack Station Storage</t>
-		<t id="4009">: Attack Station Production</t>
-		<t id="4010">: Attack Station Def. Platforms</t>
-		<t id="4011">: Attack Station Shipyard Platforms</t>
-		<t id="4012">: Clear Turret Subsystem Target</t>		
 	</page>
 </language>
