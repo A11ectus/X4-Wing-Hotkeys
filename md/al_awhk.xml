@@ -199,6 +199,18 @@
 							</do_if>
 																
 							<!--Base Orders-->							
+							<do_if value="$target and @player.entity.$SelectedFleetCommander and not @player.entity.$SelectedWing">
+								<set_value name="$text" exact="$selectiontext + {1001, 1503} + ' ' + {1001, 7832}" comment="Wing: Subordinates Remove All Orders" />
+								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
+									$id = 'order_remove_all_orders_whk',
+									$section = $section,
+									$text = $text,
+									$icon = 'order_waitforsignal',
+									$callback = InteractMenu_OnRemoveOrdersWHK,
+									$echo='Subordinates: All'
+								]" />
+							</do_if>
+							
 							<do_if value="$target and $validselection">
 								<set_value name="$text" exact="$selectiontext + {1001, 7832}" comment="Wing: Remove All Orders" />
 								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
@@ -786,11 +798,15 @@
 					</conditions>
 					<actions>
 						<signal_cue_instantly cue="Update_Player_Commander" />
-
-						<do_if value="@player.entity.$SelectedWing and 
+						<set_value name="$removecat" exact="event.param.$echo" />
+						
+						<do_if value="$removecat == 'Subordinates: All'">
+							<set_value name="$orderships" exact="@player.entity.$SelectedFleetCommander.allsubordinates" />
+						</do_if>
+						<do_elseif value="@player.entity.$SelectedWing and 
 							@player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">						
 							<set_value name="$orderships" exact="@player.entity.$SelectedFleetCommander.subordinatesingroup.{@player.entity.$SelectedWingID}" />
-						</do_if>
+						</do_elseif>
 						<do_else>
 							<set_value name="$orderships" exact="[@player.entity.$SelectedFleetCommander]" />
 						</do_else>
