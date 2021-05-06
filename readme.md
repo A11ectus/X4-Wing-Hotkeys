@@ -99,3 +99,18 @@ voice\PAGEID\normal
 </do_else>
 
 Select options appearing on select self
+
+use substr in AUO
+Cut order count in AUO
+Add hotkeys
+
+
+<speak actor="player.computer" page="X" line"Y" />
+<add_npc_line page="x" line="Y" hidechoices="true" />
+
+
+1) figure out why only fly to and remove orders works on top level commanders
+2) Remove valid orders from player as top level commander'
+3) Figure out renaming scheme
+4) update STO ship selection
+5) Update AUO ship selection
