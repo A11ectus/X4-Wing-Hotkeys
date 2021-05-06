@@ -614,7 +614,7 @@
 								<set_value name="player.entity.$SelectedFleetCommander" exact="player.occupiedship" />
 							</do_if>
 							<do_else>
-								<set_value name="player.entity.$SelectedFleetCommander" exact="player.occupiedship.commander" />
+								<set_value name="player.entity.$SelectedFleetCommander" exact="player.occupiedship.jobcommander" />
 							</do_else>
 						</do_if>
 						<reset_cue cue="this" />
@@ -630,21 +630,21 @@
 						
 						<do_if value="$setfleet == 'Flt-1'">
 							<do_if value="@player.entity.$FirstFleet">
-								<substitute_text text="player.entity.$FirstFleet.fleet.name">
+								<substitute_text text="player.entity.$FirstFleet.name">
 									<replace string="'Flt-1 '" with="''" />
 								</substitute_text>
 							</do_if>
 							<set_value name="player.entity.$FirstFleet" exact="$target"/>
-							<set_value name="player.entity.$FirstFleet.fleet.name" exact="'Flt-1 ' + player.entity.$FirstFleet.fleet.name"/>
+							<set_value name="player.entity.$FirstFleet.fleet.name" exact="'Flt-1 ' + player.entity.$FirstFleet.name"/>
 						</do_if>
 						<do_elseif value="$setfleet == 'Flt-2'">
 							<do_if value="@player.entity.$SecondFleet">
-								<substitute_text text="player.entity.$SecondFleet.controllable.fleet.name">
+								<substitute_text text="player.entity.$SecondFleet.name">
 									<replace string="'Flt-2 '" with="''" />
 								</substitute_text>
 							</do_if>
 							<set_value name="player.entity.$SecondFleet" exact="$target"/>
-							<set_value name="player.entity.$SecondFleet.fleet.name" exact="'Flt-2 ' + player.entity.$SecondFleet.controllable.fleet.name"/>
+							<set_value name="player.entity.$SecondFleet.fleet.name" exact="'Flt-2 ' + player.entity.$SecondFleet.name"/>
 						</do_elseif>
 						
 						<reset_cue cue="this" />
