@@ -604,31 +604,50 @@
 						<cancel_cue cue="this" />
 					</actions>
 				</cue>
-				<cue name="Update_Player_Commander">				
+				<cue name="Update_Player_Commander">	
+					<!--Function to update the commander corresponding to PLR fleet selection -->
 					<conditions>
 						<event_cue_signalled />
 					</conditions>
 					<actions>
+						<!--Only update if selected fleet is the player fleet-->
 						<do_if value="player.entity.$SelectedFleet == 'Plr'">
-							<do_if value="@player.occupiedship.fleet.iscommander">
+						
+							<do_if value="@player.occupiedship.fleet.iscommander"> 
+								<!--Player flying ship with subordinates; select player ship-->
 								<set_value name="player.entity.$SelectedFleetCommander" exact="player.occupiedship" />
 							</do_if>
-							<do_else>
-								<set_value name="player.entity.$SelectedFleetCommander" exact="player.occupiedship.jobcommander" />
+							<do_elseif value="player.ship.fleet.iscommander or @player.ship.subordinates.count"> 
+								<!--Player standing on a fleet commander's ship; select that ship-->
+								<set_value name="player.entity.$SelectedFleetCommander" exact="player.ship" />
+							</do_elseif>
+							<do_else> 
+								<!--Player standing on a ship in a fleet; select that ship's commander-->
+								<set_value name="player.entity.$SelectedFleetCommander" exact="player.ship.commander" />
 							</do_else>
+							
+							<!--If selected wing is no longer valid deselect it (for example if player teleported to a new ship that doesnt have the given wing)-->
+							<do_if value="(@player.entity.$SelectedWing and not @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID})">
+								<set_value name="player.entity.$SelectedWing" exact="null"/>
+								<set_value name="player.entity.$SelectedWingID" exact="null"/>
+							</do_if>
+							
 						</do_if>
 						<reset_cue cue="this" />
 					</actions>
 				</cue>
 				<cue name="InteractMenu_OnSetFleet">
+					<!--Function to set fleet commander references/shortcuts-->
 					<conditions>
 						<event_cue_signalled />
 					</conditions>
 					<actions>
-						<set_value name="$target" exact="event.param.$object" />
-						<set_value name="$setfleet" exact="event.param.$echo"/>
+						<set_value name="$target" exact="event.param.$object" /> <!--entity that was right clicked on-->
+						<set_value name="$setfleet" exact="event.param.$echo" /> <!--id string to determine which fleet reference is set-->
 						
+						<!--Update first reference if requested-->
 						<do_if value="$setfleet == 'Flt-1'">
+							<!--If a previous reference existed clear the name tagging before updating-->
 							<do_if value="@player.entity.$FirstFleet">
 								<substitute_text text="$newshipname" source="player.entity.$FirstFleet.name">
 									<replace string="'Flt-1 '" with="''" />
@@ -636,10 +655,16 @@
 								
 								<set_object_name object="player.entity.$FirstFleet" name="$newshipname" />
 							</do_if>
+							
+							<!--Update the reference-->
 							<set_value name="player.entity.$FirstFleet" exact="$target"/>
+							
+							<!--Prepend the referenced ship name with fleet tag-->
 							<set_object_name object="player.entity.$FirstFleet" name="'Flt-1 ' + player.entity.$FirstFleet.name"/>
 						</do_if>
+						<!--Update second reference if requested-->
 						<do_elseif value="$setfleet == 'Flt-2'">
+							<!--If a previous reference existed clear the name tagging before updating-->
 							<do_if value="@player.entity.$SecondFleet">
 								<substitute_text text="$newshipname" source="player.entity.$SecondFleet.name">
 									<replace string="'Flt-2 '" with="''" />
@@ -647,7 +672,11 @@
 								
 								<set_object_name object="player.entity.$SecondFleet" name="$newshipname"/>
 							</do_if>
+							
+							<!--Update the reference-->
 							<set_value name="player.entity.$SecondFleet" exact="$target"/>
+							
+							<!--Prepend the referenced ship name with fleet tag-->
 							<set_object_name object="player.entity.$SecondFleet" name="'Flt-2 ' + player.entity.$SecondFleet.name"/>
 						</do_elseif>
 						
@@ -655,25 +684,30 @@
 					</actions>
 				</cue>
 				<cue name="InteractMenu_OnSelectFleet">
+					<!--Function to quick select a previously set fleet commander reference-->
 					<conditions>
 						<event_cue_signalled />
 					</conditions>
 					<actions>
 					
+						<!--If we're selecting a different fleet than we had previously clear the wing selection to reset to base state-->
 						<do_if value="player.entity.$SelectedFleet != event.param.$echo">
 							<set_value name="player.entity.$SelectedWing" exact="null"/>
 							<set_value name="player.entity.$SelectedWingID" exact="null"/>
 						</do_if>
 					
+						<!--update the fleet selection id string-->
 						<set_value name="player.entity.$SelectedFleet" exact="event.param.$echo"/>
 						
+						<!--Select the appropriate pre-set fleet reference based upon id string-->
 						<do_if value="player.entity.$SelectedFleet == 'Flt-1'">
 							<set_value name="player.entity.$SelectedFleetCommander" exact="player.entity.$FirstFleet"/>
 						</do_if>
 						<do_elseif value="player.entity.$SelectedFleet == 'Flt-2'">
 							<set_value name="player.entity.$SelectedFleetCommander" exact="player.entity.$SecondFleet"/>
 						</do_elseif>
-						<do_else> <!--Implicitly captures 'clear' command as well-->
+						<!--If given an unknown shortcut failover to the player fleet. Implicitly captures 'clear' command as well-->
+						<do_else> 
 							<set_value name="player.entity.$SelectedFleet" exact="'Plr'"/>
 							<signal_cue_instantly cue="Update_Player_Commander" />
 						</do_else>
@@ -682,12 +716,15 @@
 					</actions>
 				</cue>				
 				<cue name="InteractMenu_OnSelectWing">
+					<!--Function to quick select/update wing references-->
 					<conditions>
 						<event_cue_signalled />
 					</conditions>
 					<actions>
+						<!--update the wing selection id string-->
 						<set_value name="player.entity.$SelectedWing" exact="event.param.$echo"/>
 						
+						<!--Select the appropriate wing reference based upon id string-->
 						<do_if value="player.entity.$SelectedWing == 'A'">
 							<set_value name="player.entity.$SelectedWingID" exact="1"/>
 						</do_if>
@@ -700,7 +737,8 @@
 						<do_elseif value="player.entity.$SelectedWing == 'D'">
 							<set_value name="player.entity.$SelectedWingID" exact="4"/>
 						</do_elseif>
-						<do_else> <!--Implicitly captures 'clear' command as well-->
+						<!--If given an unknown shortcut select no wing. Implicitly captures 'clear' command-->
+						<do_else>
 							<set_value name="player.entity.$SelectedWing" exact="null"/>
 							<set_value name="player.entity.$SelectedWingID" exact="null"/>
 						</do_else>
