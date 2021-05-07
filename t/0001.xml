@@ -8,15 +8,17 @@
 		<t id="2">Debug log</t>
 		<t id="3">Do debug function</t>
 		<!-- Selectors -->
-		<t id="1000">Clear Wing Selection: </t>
+		<t id="1000">Clear Wing Selection</t>
 		<t id="1001">Select Alpha Wing</t>
 		<t id="1002">Select Beta Wing</t>
 		<t id="1003">Select Gamma Wing</t>
 		<t id="1004">Select Delta Wing</t>
-		<t id="2000">Clear Fleet Selection: </t>
+		<t id="2000">Clear Fleet Selection</t>
 		<t id="2001">Set 1st Fleet</t>	
 		<t id="2002">Set 2nd Fleet</t>	
 		<t id="2003">Select 1st Fleet</t>	
 		<t id="2004">Select 2nd Fleet</t>	
+		<!-- Hotkey Sections -->
+		<t id="3000">Fleet and Wing Selectors</t>	
 	</page>
 </language>
