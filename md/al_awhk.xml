@@ -839,7 +839,6 @@
 						<event_cue_signalled />
 					</conditions>
 					<actions>
-						<signal_cue_instantly cue="Update_Player_Commander" />
 						<set_value name="$removecat" exact="event.param.$echo" />
 						
 						<do_if value="$removecat == 'Subordinates: All'">
@@ -872,8 +871,6 @@
 						<set_value name="$destoffsetcomponent" exact="event.param.$offsetcomponent" />
 						<set_value name="$destfinal" exact="[$destoffsetcomponent, $destoffset]" />
 						<set_value name="$movecat" exact="event.param.$echo" />
-							
-						<signal_cue_instantly cue="Update_Player_Commander" />
 						
 						<do_if value="@player.entity.$SelectedWing and 
 							@player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">						

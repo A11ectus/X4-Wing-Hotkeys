@@ -108,20 +108,15 @@ Add hotkeys
 <speak actor="player.computer" page="X" line"Y" />
 <add_npc_line page="x" line="Y" hidechoices="true" />
 
-1) Add subordinate remove orders -- test
-2) Figure out renaming scheme
-3) Add audio cues
-4) Add hotkey support
-5) Improvements for update player commander
-5) Iterate STO and AUO
+1) Add hotkey support
+2) Add audio cues
+3) Iterate STO and AUO
 	STO:
-		Update player commander
 		Alter disable priorities to increase priority of large turrets
 		Allow carriers to attack subsystems without LOS
 		Add attack all to back of attack fighters
 		merge unified lua
 	AUO:
-		Update player commander
 		Correct awaiting signal
 		Add attack all enemies in range
 		Incorporate chinese translation
