@@ -136,7 +136,7 @@
 					$id = 'hk_move_whk',
 					$category = $category,
 					$name = $text,
-					$onPress = Hotkey_OnMoveWHK,
+					$onPress = InteractMenu_OnMoveWHK,
 					$contexts = ['flying', 'walking', 'menu_map'],	
 					$echo='Wing: Move'
 				]" />
@@ -156,7 +156,7 @@
 					$id = 'hk_follow_whk',
 					$category = $category,
 					$name = $text,
-					$onPress = Hotkey_OnProtectWHK,
+					$onPress = InteractMenu__OnProtectWHK,
 					$contexts = ['flying'],	
 					$echo='Wing: Protect'
 				]" />
@@ -166,7 +166,7 @@
 					$id = 'hk_follow_whk',
 					$category = $category,
 					$name = $text,
-					$onPress = Hotkey_OnProtectWHK,
+					$onPress = InteractMenu_OnProtectWHK,
 					$contexts = ['flying', 'walking', 'menu_map'],	
 					$echo='Wing: Protect Position'
 				]" />
@@ -176,7 +176,7 @@
 					$id = 'hk_attack_whk',
 					$category = $category,
 					$name = $text,
-					$onPress = Hotkey_OnAttackWHK,
+					$onPress = InteractMenu_OnAttackWHK,
 					$contexts = ['flying'],	
 					$echo='Wing: Attack'
 				]" />
@@ -186,7 +186,7 @@
 					$id = 'hk_attackinrange_whk',
 					$category = $category,
 					$name = $text,
-					$onPress = Hotkey_OnAttackInRangeWHK,
+					$onPress = InteractMenu_OnAttackInRangeWHK,
 					$contexts = ['flying', 'walking', 'menu_map'],	
 					$echo='Wing: Attack in range'
 				]" />
