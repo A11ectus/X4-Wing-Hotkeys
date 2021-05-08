@@ -39,7 +39,7 @@
 				
 				<set_value name="$text" exact="{23811, 2003}" comment="Select Flt-1" />
 				<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
-					$id = 'hk_select_2ndfleet_whk',
+					$id = 'hk_select_1stfleet_whk',
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnSelectFleet,
@@ -206,7 +206,7 @@
 								<do_if value="@player.entity.$SelectedFleet != 'Flt-1' and @player.entity.$FirstFleet">
 									<set_value name="$text" exact="{23811, 2003}" comment="Select Flt-1" />
 										<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
-											$id = 'order_select_1stfleet_m',
+											$id = 'order_select_1stfleet_whk',
 											$section = $section,
 											$text = $text,
 											$icon = 'order_assigncommander',
