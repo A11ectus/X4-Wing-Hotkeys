@@ -1,0 +1,226 @@
+																
+
+							
+	<!--Urgent Orders-->
+	
+	<set_value name="$text" exact="$selectiontext + {12115, 2001}" comment="Wing: Fly and Wait, Immediate" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_move_immediate_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_urgent_orders.InteractMenu_OnMoveUrgent,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: Immediate'
+	]" />
+
+	<set_value name="$text" exact="$selectiontext + {12115, 2002}" comment="Wing: Fly and Wait, Immediate/Same Plane" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_move_immediatesameplane_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_urgent_orders.InteractMenu_OnMoveUrgent,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: Immediate / Same Plane'
+	]" />
+
+	<set_value name="$text" exact="$selectiontext + {12115, 2003}" comment="Wing: Fly and Wait, Same Plane" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_move_sameplane_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_urgent_orders.InteractMenu_OnMoveUrgent,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: Same Plane'
+	]" />
+	
+	<set_value name="$text" exact="$selectiontext + {12115, 2004}" comment="Wing: Fly and Wait, No Recall" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_move_norecall_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_urgent_orders.InteractMenu_OnMoveUrgent,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: No Recall'
+	]" />
+
+	<set_value name="$text" exact="$selectiontext + {12115, 2005}" comment="Wing: Fly and Wait, No Recall/Same Plane" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_move_norecallsameplane_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_urgent_orders.InteractMenu_OnMoveUrgent,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: No Recall / Same Plane'
+	]" />							
+
+	<set_value name="$text" exact="$selectiontext + {12115, 2006}" comment="Wing: Fly and Wait, Urgent" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_move_urgent_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_urgent_orders.InteractMenu_OnMoveUrgent,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: Urgent'
+	]" />															
+	
+	<set_value name="$text" exact="$selectiontext + {12115, 2007}" comment="Wing: Fly and Wait, Urgent/Same Plane" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_move_urgentsameplane_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_urgent_orders.InteractMenu_OnMoveUrgent,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: Urgent / Same Plane'
+	]" />										
+
+	<set_value name="$text" exact="$selectiontext + {12115, 2008}" comment="Wing: Dock and Wait, Urgent" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_dock_urgent_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_urgent_orders.InteractMenu_OnDockUrgent,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: Urgent'
+	]" />
+
+	<set_value name="$text" exact="$selectiontext + {12115, 2000}" comment="Wing: Attack, Immediate" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_attack_immediate_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_urgent_orders.InteractMenu_OnAttackUrgent,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: Immediate'
+	]" />
+							
+	<!--Subsystem Targeting Orders-->
+														
+	<set_value name="$text" exact="$selectiontext + {92015, 2000}" comment="Wing: Attack Engines" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_attack_subsystem_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: engines'
+	]" />
+
+	<set_value name="$text" exact="$selectiontext + {92015, 2001}" comment="Wing: Attack Shields" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_attack_shields_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: shields'
+	]" />
+
+	<set_value name="$text" exact="$selectiontext + {92015, 2002}" comment="Wing: Attack M Turrets" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_attack_m_turrets_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: weps_m'
+	]" />
+
+	<set_value name="$text" exact="$selectiontext + {92015, 2003}" comment="Wing: Attack L Turrets" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_attack_l_turrets_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: weps_l'
+	]" />					
+
+	<set_value name="$text" exact="$selectiontext + {92015, 2004}" comment="Wing: Attack Miss Turrets" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_attack_missturr_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: missiles'
+	]" />
+
+	<set_value name="$text" exact="$selectiontext + {92015, 2005}" comment="Wing: Attack Main Batteries" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_attack_batteries_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: batteries'
+	]" />					
+
+	<set_value name="$text" exact="$selectiontext + {92015, 2006}" comment="Wing: Disable" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_attack_disable_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: disable'
+	]" />					
+
+	<set_value name="$text" exact="$selectiontext + {92015, 2007}" comment="Wing: Attack Station Docks" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_attack_stationdocks_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: stationdocks'
+	]" />
+
+	<set_value name="$text" exact="$selectiontext + {92015, 2008}" comment="Wing: Attack Station Storage" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_attack_stationstorage_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: stationstorage'
+	]" />
+
+	<set_value name="$text" exact="$selectiontext + {92015, 2009}" comment="Wing: Attack Station Production" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_attack_stationproduction_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: stationproduction'
+	]" />
+
+	<set_value name="$text" exact="$selectiontext + {92015, 2010}" comment="Wing: Attack Station Def. Platforms" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_attack_stationdefense_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: stationdefense'
+	]" />			
+
+	<set_value name="$text" exact="$selectiontext + {92015, 2011}" comment="Wing: Attack Station Shipyard Platforms" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_attack_stationbuild_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_subsystem_targeting_orders.InteractMenu_OnAttackSubSys,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: stationbuild'
+	]" />			
+										
+	<set_value name="$text" exact="$selectiontext + {92015, 2012}" comment="Wing: Clear Turret Subsystem Target" />
+	<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+		$id = 'hk_clear_turret_subsys_pref_whk',
+		$category = $category,
+		$name = $text,
+		$onPress = md.al_subsystem_targeting_orders.InteractMenu_OnClearTurretPrefs,
+		$contexts = ['flying', 'walking', 'menu_map'],	
+		$echo='Wing: clearturretsubyspref'
+	]" />

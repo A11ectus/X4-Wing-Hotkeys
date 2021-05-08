@@ -20,5 +20,6 @@
 		<t id="2004">Select 2nd Fleet</t>	
 		<!-- Hotkey Sections -->
 		<t id="3000">Fleet and Wing Selectors</t>	
+		<t id="3001">Basic Wing Orders</t>	
 	</page>
 </language>

@@ -106,6 +106,90 @@
 					$contexts = ['flying', 'walking', 'menu_map'],		
 					$echo='D'
 				]" />					
+
+				<!--Base Orders-->							
+
+				<set_value name="$category" exact="{23811, 3001}" comment="Basic Wing Orders" />
+				
+				<set_value name="$text" exact="{1001, 1503} + ' ' + {1001, 7832}" comment="Subordinates Remove All Orders" />
+				<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+					$id = 'hk_remove_sub_orders_whk',
+					$category = $category,
+					$name = $text,
+					$onPress = InteractMenu_OnRemoveOrdersWHK,
+					$contexts = ['flying', 'walking', 'menu_map'],		
+					$echo='Subordinates: All'
+				]" />
+
+				<set_value name="$text" exact="{1001, 7832}" comment="Remove All Orders" />
+				<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+					$id = 'hk_remove_all_orders_whk',
+					$category = $category,
+					$name = $text,
+					$onPress = InteractMenu_OnRemoveOrdersWHK,
+					$contexts = ['flying', 'walking', 'menu_map'],	
+					$echo='Wing: All'
+				]" />
+				
+				<set_value name="$text" exact="{1041, 251}" comment="Fly and Wait" />
+				<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+					$id = 'hk_move_whk',
+					$category = $category,
+					$name = $text,
+					$onPress = Hotkey_OnMoveWHK,
+					$contexts = ['flying', 'walking', 'menu_map'],	
+					$echo='Wing: Move'
+				]" />
+
+				<set_value name="$text" exact="{1041, 451}" comment="Dock and Wait" />
+				<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+					$id = 'hk_dock_whk',
+					$category = $category,
+					$name = $text,
+					$onPress = InteractMenu_OnDockWHK,
+					$contexts = ['flying'],	
+					$echo='Wing: Dock'
+				]" />
+
+				<set_value name="$text" exact="{1001, 7989}" comment="Protect until further notice" />
+				<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+					$id = 'hk_follow_whk',
+					$category = $category,
+					$name = $text,
+					$onPress = Hotkey_OnProtectWHK,
+					$contexts = ['flying'],	
+					$echo='Wing: Protect'
+				]" />
+
+				<set_value name="$text" exact="{1041, 381}" comment="Protect Position" />
+				<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+					$id = 'hk_follow_whk',
+					$category = $category,
+					$name = $text,
+					$onPress = Hotkey_OnProtectWHK,
+					$contexts = ['flying', 'walking', 'menu_map'],	
+					$echo='Wing: Protect Position'
+				]" />
+
+				<set_value name="$text" exact="{1041, 431}" comment="Attack" />
+				<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+					$id = 'hk_attack_whk',
+					$category = $category,
+					$name = $text,
+					$onPress = Hotkey_OnAttackWHK,
+					$contexts = ['flying'],	
+					$echo='Wing: Attack'
+				]" />
+
+				<set_value name="$text" exact="{1041, 631}" comment="Attack targets in range" />
+				<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
+					$id = 'hk_attackinrange_whk',
+					$category = $category,
+					$name = $text,
+					$onPress = Hotkey_OnAttackInRangeWHK,
+					$contexts = ['flying', 'walking', 'menu_map'],	
+					$echo='Wing: Attack in range'
+				]" />
 				
 			</actions>
 		</cue>	
@@ -779,6 +863,10 @@
 						<event_cue_signalled />
 					</conditions>
 					<actions>
+						<set_value name="$speak" exact="false" />
+						<do_if value="event.param.$id == 'hk_select_1stfleet_whk' or event.param.$id == 'hk_select_2ndfleet_whk'">
+							<set_value name="$speak" exact="true" />
+						</do_if>     
 					
 						<!--If we're selecting a different fleet than we had previously clear the wing selection to reset to base state-->
 						<do_if value="player.entity.$SelectedFleet != event.param.$echo">
@@ -792,14 +880,23 @@
 						<!--Select the appropriate pre-set fleet reference based upon id string-->
 						<do_if value="player.entity.$SelectedFleet == 'Flt-1'">
 							<set_value name="player.entity.$SelectedFleetCommander" exact="player.entity.$FirstFleet"/>
+							<do_if value="$speak">
+								<speak actor="player.computer" page="20402" line="1" /> <!--"I(speak as 1)"-->
+							</do_if>
 						</do_if>
 						<do_elseif value="player.entity.$SelectedFleet == 'Flt-2'">
 							<set_value name="player.entity.$SelectedFleetCommander" exact="player.entity.$SecondFleet"/>
+							<do_if value="$speak">
+								<speak actor="player.computer" page="20402" line="2" /> <!--"II(speak as 2)"-->
+							</do_if>
 						</do_elseif>
 						<!--If given an unknown shortcut failover to the player fleet. Implicitly captures 'clear' command as well-->
 						<do_else> 
 							<set_value name="player.entity.$SelectedFleet" exact="'Plr'"/>
 							<signal_cue_instantly cue="Update_Player_Commander" />
+							<do_if value="$speak">
+								<speak actor="player.computer" page="10002" line="135" /> <!--"Cancelled"-->
+							</do_if>
 						</do_else>
 						
 						<reset_cue cue="this" />
@@ -811,26 +908,46 @@
 						<event_cue_signalled />
 					</conditions>
 					<actions>
+						<set_value name="$speak" exact="false" />
+						<do_if value="event.param.$id == 'hk_select_alpha_whk' or event.param.$id == 'hk_select_beta_whk' or event.param.$id == 'hk_select_gamma_whk' or event.param.$id == 'hk_select_delta_whk'">
+							<set_value name="$speak" exact="true" />
+						</do_if>
+						  
 						<!--update the wing selection id string-->
 						<set_value name="player.entity.$SelectedWing" exact="event.param.$echo"/>
 						
 						<!--Select the appropriate wing reference based upon id string-->
 						<do_if value="player.entity.$SelectedWing == 'A'">
 							<set_value name="player.entity.$SelectedWingID" exact="1"/>
+							<do_if value="$speak">
+								<speak actor="player.computer" page="20401" line="1" /> <!--"Alpha"-->
+							</do_if>
 						</do_if>
 						<do_elseif value="player.entity.$SelectedWing == 'B'">
 							<set_value name="player.entity.$SelectedWingID" exact="2"/>
+							<do_if value="$speak">
+								<speak actor="player.computer" page="20401" line="2" /> <!--"Beta"-->
+							</do_if>
 						</do_elseif>
 						<do_elseif value="player.entity.$SelectedWing == 'G'">
 							<set_value name="player.entity.$SelectedWingID" exact="3"/>
+							<do_if value="$speak">
+								<speak actor="player.computer" page="20401" line="3" /> <!--"Gamma"-->
+							</do_if>
 						</do_elseif>
 						<do_elseif value="player.entity.$SelectedWing == 'D'">
 							<set_value name="player.entity.$SelectedWingID" exact="4"/>
+							<do_if value="$speak">
+								<speak actor="player.computer" page="20401" line="4" /> <!--"Delta"-->
+							</do_if>
 						</do_elseif>
 						<!--If given an unknown shortcut select no wing. Implicitly captures 'clear' command-->
 						<do_else>
 							<set_value name="player.entity.$SelectedWing" exact="null"/>
 							<set_value name="player.entity.$SelectedWingID" exact="null"/>
+							<do_if value="$speak">
+								<speak actor="player.computer" page="10002" line="135" /> <!--"Cancelled"-->
+							</do_if>
 						</do_else>
 						
 						<reset_cue cue="this" />
@@ -956,29 +1073,47 @@
 						<event_cue_signalled />
 					</conditions>
 					<actions>
-						<set_value name="$destobject" exact="event.param.$object" />
-						<set_value name="$destoffset" exact="event.param.$offset" />
-						<set_value name="$destoffsetcomponent" exact="event.param.$offsetcomponent" />
-						<set_value name="$destfinal" exact="[$destoffsetcomponent, $destoffset]" />
-						<set_value name="$movecat" exact="event.param.$echo" />
+						<set_value name="$doaction" exact="true" />
 						
-						<do_if value="@player.entity.$SelectedWing and 
-							@player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">						
-							<set_value name="$orderships" exact="@player.entity.$SelectedFleetCommander.subordinatesingroup.{@player.entity.$SelectedWingID}" />
+						<do_if value="event.param.$id == 'hk_dock_whk'">
+							<set_value name="$destfinal" exact="[player.ship, position.[0,0,0]]" />
+							
+							<set_value name="$validselection" exact="((@player.entity.$SelectedFleetCommander and @player.entity.$SelectedFleetCommander != player.occupiedship) or (@player.entity.$SelectedWing and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}))" />
+							
+							<do_if value="@$destfinal and $validselection">
+								<speak actor="player.computer" page="10002" line="132" /> <!--"Command Accepted"-->
+							</do_if>
+							<do_else>
+								<speak actor="player.computer" page="10002" line="133" /> <!--"Command Rejected"-->
+								<set_value name="$doaction" exact="false" />		
+							</do_else>
 						</do_if>
 						<do_else>
-							<set_value name="$orderships" exact="[@player.entity.$SelectedFleetCommander]" />
+							<set_value name="$destobject" exact="event.param.$object" />
+							<set_value name="$destoffset" exact="event.param.$offset" />
+							<set_value name="$destoffsetcomponent" exact="event.param.$offsetcomponent" />
+							<set_value name="$destfinal" exact="[$destoffsetcomponent, $destoffset]" />
 						</do_else>
-												
-						<do_for_each name="$ship" in="$orderships">
-							<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
-							<do_if value="$ship">
-								<create_order name="$order" object="$ship" id="'MoveWait'">
-									<param name="destination" value="$destfinal" />
-									<param name="debugchance" value="alAWHK.$debugChance" />
-								</create_order>
+						
+						<do_if value="$doaction">
+							<do_if value="@player.entity.$SelectedWing and 
+								@player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">						
+								<set_value name="$orderships" exact="@player.entity.$SelectedFleetCommander.subordinatesingroup.{@player.entity.$SelectedWingID}" />
 							</do_if>
-						</do_for_each>
+							<do_else>
+								<set_value name="$orderships" exact="[@player.entity.$SelectedFleetCommander]" />
+							</do_else>
+													
+							<do_for_each name="$ship" in="$orderships">
+								<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
+								<do_if value="$ship">
+									<create_order name="$order" object="$ship" id="'MoveWait'">
+										<param name="destination" value="$destfinal" />
+										<param name="debugchance" value="alAWHK.$debugChance" />
+									</create_order>
+								</do_if>
+							</do_for_each>						
+						</do_if>
 						<reset_cue cue="this" />
 					</actions>
 				</cue>				
@@ -1018,26 +1153,44 @@
 						<event_cue_signalled />
 					</conditions>
 					<actions>
-						<set_value name="$destfinal" exact="event.param.$object" />
-						<set_value name="$dockcat" exact="event.param.$echo" />
-
-						<do_if value="@player.entity.$SelectedWing and 
-							@player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">						
-							<set_value name="$orderships" exact="@player.entity.$SelectedFleetCommander.subordinatesingroup.{@player.entity.$SelectedWingID}" />
+						<set_value name="$doaction" exact="true" />
+						
+						<do_if value="event.param.$id == 'hk_dock_whk'">
+							<set_value name="$destfinal" exact="player.target" />
+							
+							<set_value name="$validselection" exact="((@player.entity.$SelectedFleetCommander and @player.entity.$SelectedFleetCommander != player.occupiedship) or (@player.entity.$SelectedWing and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}))" />
+							
+							<do_if value="@$destfinal and @$destfinal.dockingallowed.{@player.occupiedship} and $validselection">
+								<speak actor="player.computer" page="10002" line="132" /> <!--"Command Accepted"-->
+							</do_if>
+							<do_else>
+								<speak actor="player.computer" page="10002" line="133" /> <!--"Command Rejected"-->
+								<set_value name="$doaction" exact="false" />		
+							</do_else>
 						</do_if>
 						<do_else>
-							<set_value name="$orderships" exact="[@player.entity.$SelectedFleetCommander]" />
+							<set_value name="$destfinal" exact="event.param.$object" />
 						</do_else>
-												
-						<do_for_each name="$ship" in="@$orderships">						
-							<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
-							<do_if value="$ship">							
-								<create_order name="$order" object="$ship" id="'DockAndWait'">
-									<param name="destination" value="$destfinal" />
-									<param name="debugchance" value="alAWHK.$debugChance" />
-								</create_order>
+						
+						<do_if value="$doaction">
+							<do_if value="@player.entity.$SelectedWing and 
+								@player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}">						
+								<set_value name="$orderships" exact="@player.entity.$SelectedFleetCommander.subordinatesingroup.{@player.entity.$SelectedWingID}" />
 							</do_if>
-						</do_for_each>
+							<do_else>
+								<set_value name="$orderships" exact="[@player.entity.$SelectedFleetCommander]" />
+							</do_else>
+													
+							<do_for_each name="$ship" in="@$orderships">						
+								<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
+								<do_if value="$ship">							
+									<create_order name="$order" object="$ship" id="'DockAndWait'">
+										<param name="destination" value="$destfinal" />
+										<param name="debugchance" value="alAWHK.$debugChance" />
+									</create_order>
+								</do_if>
+							</do_for_each>
+						</do_if>
 						<reset_cue cue="this" />
 					</actions>
 				</cue>								
