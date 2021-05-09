@@ -33,7 +33,7 @@
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnSelectFleet,
-					$contexts = ['flying', 'walking', 'menu_map'],		
+					$contexts = ['flying', 'walking', 'menus'],		
 					$echo='Clear'
 				]" />			
 				
@@ -43,8 +43,8 @@
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnSelectFleet,
-					$contexts = ['flying', 'walking', 'menu_map'],		
-					$echo='Flt-2'
+					$contexts = ['flying', 'walking', 'menus'],		
+					$echo='Flt-1'
 				]" />
 
 				<set_value name="$text" exact="{23811, 2004}" comment="Select Flt-2" />
@@ -53,7 +53,7 @@
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnSelectFleet,
-					$contexts = ['flying', 'walking', 'menu_map'],		
+					$contexts = ['flying', 'walking', 'menus'],		
 					$echo='Flt-2'
 				]" />	
 				
@@ -63,7 +63,7 @@
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnSelectWing,
-					$contexts = ['flying', 'walking', 'menu_map'],		
+					$contexts = ['flying', 'walking', 'menus'],		
 					$echo='Clear'
 				]" />							
 
@@ -73,7 +73,7 @@
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnSelectWing,
-					$contexts = ['flying', 'walking', 'menu_map'],		
+					$contexts = ['flying', 'walking', 'menus'],		
 					$echo='A'
 				]" />
 
@@ -83,7 +83,7 @@
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnSelectWing,
-					$contexts = ['flying', 'walking', 'menu_map'],		
+					$contexts = ['flying', 'walking', 'menus'],		
 					$echo='B'
 				]" />
 
@@ -93,7 +93,7 @@
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnSelectWing,
-					$contexts = ['flying', 'walking', 'menu_map'],		
+					$contexts = ['flying', 'walking', 'menus'],		
 					$echo='G'
 				]" />								
 
@@ -103,7 +103,7 @@
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnSelectWing,
-					$contexts = ['flying', 'walking', 'menu_map'],		
+					$contexts = ['flying', 'walking', 'menus'],		
 					$echo='D'
 				]" />					
 
@@ -117,7 +117,7 @@
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnRemoveOrdersWHK,
-					$contexts = ['flying', 'walking', 'menu_map'],		
+					$contexts = ['flying', 'walking', 'menus'],		
 					$echo='Subordinates: All'
 				]" />
 
@@ -127,7 +127,7 @@
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnRemoveOrdersWHK,
-					$contexts = ['flying', 'walking', 'menu_map'],	
+					$contexts = ['flying', 'walking', 'menus'],	
 					$echo='Wing: All'
 				]" />
 				
@@ -137,7 +137,7 @@
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnMoveWHK,
-					$contexts = ['flying', 'walking', 'menu_map'],	
+					$contexts = ['flying', 'walking', 'menus'],	
 					$echo='Wing: Move'
 				]" />
 
@@ -147,7 +147,7 @@
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnDockWHK,
-					$contexts = ['flying', 'walking', 'menu_map'],	
+					$contexts = ['flying', 'walking', 'menus'],	
 					$echo='Wing: Dock'
 				]" />
 
@@ -157,7 +157,7 @@
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnProtectWHK,
-					$contexts = ['flying', 'walking', 'menu_map'],	
+					$contexts = ['flying', 'walking', 'menus'],	
 					$echo='Wing: Protect'
 				]" />
 
@@ -167,7 +167,7 @@
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnProtectWHK,
-					$contexts = ['flying', 'walking', 'menu_map'],	
+					$contexts = ['flying', 'walking', 'menus'],	
 					$echo='Wing: Protect Position'
 				]" />
 
@@ -177,7 +177,7 @@
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnAttackWHK,
-					$contexts = ['flying', 'walking', 'menu_map'],	
+					$contexts = ['flying', 'walking', 'menus'],	
 					$echo='Wing: Attack'
 				]" />
 
@@ -187,7 +187,7 @@
 					$category = $category,
 					$name = $text,
 					$onPress = InteractMenu_OnAttackInRangeWHK,
-					$contexts = ['flying', 'walking', 'menu_map'],	
+					$contexts = ['flying', 'walking', 'menus'],	
 					$echo='Wing: Attack in range'
 				]" />
 				
@@ -882,12 +882,14 @@
 							<set_value name="player.entity.$SelectedFleetCommander" exact="player.entity.$FirstFleet"/>
 							<do_if value="$speak">
 								<speak actor="player.computer" page="20402" line="1" /> <!--"I(speak as 1)"-->
+								<show_notification text="player.entity.$SelectedFleet + ': ' + {10002, 27}"/> <!--"Flt: Connection Established"-->
 							</do_if>
 						</do_if>
 						<do_elseif value="player.entity.$SelectedFleet == 'Flt-2'">
 							<set_value name="player.entity.$SelectedFleetCommander" exact="player.entity.$SecondFleet"/>
 							<do_if value="$speak">
 								<speak actor="player.computer" page="20402" line="2" /> <!--"II(speak as 2)"-->
+								<show_notification text="player.entity.$SelectedFleet + ': ' + {10002, 27}"/> <!--"Flt: Connection Established"-->
 							</do_if>
 						</do_elseif>
 						<!--If given an unknown shortcut failover to the player fleet. Implicitly captures 'clear' command as well-->
@@ -895,7 +897,8 @@
 							<set_value name="player.entity.$SelectedFleet" exact="'Plr'"/>
 							<signal_cue_instantly cue="Update_Player_Commander" />
 							<do_if value="$speak">
-								<speak actor="player.computer" page="10002" line="135" /> <!--"Cancelled"-->
+								<speak actor="player.computer" page="10002" line="28" /> <!--"Connection Lost"-->
+								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {10002, 28}"/> <!--"Flt: Connection Lost"-->
 							</do_if>
 						</do_else>
 						
@@ -913,40 +916,78 @@
 							<set_value name="$speak" exact="true" />
 						</do_if>
 						  
-						<!--update the wing selection id string-->
-						<set_value name="player.entity.$SelectedWing" exact="event.param.$echo"/>
-						
 						<!--Select the appropriate wing reference based upon id string-->
-						<do_if value="player.entity.$SelectedWing == 'A'">
-							<set_value name="player.entity.$SelectedWingID" exact="1"/>
-							<do_if value="$speak">
-								<speak actor="player.computer" page="20401" line="1" /> <!--"Alpha"-->
+						<do_if value="event.param.$echo == 'A'">
+							<do_if value="@player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{1}">
+								<set_value name="player.entity.$SelectedWing" exact="event.param.$echo"/>
+								<set_value name="player.entity.$SelectedWingID" exact="1"/>
+								<do_if value="$speak">
+									<speak actor="player.computer" page="20401" line="1" /> <!--"Alpha"-->
+									<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {10002, 27}"/> <!--"Flt: Connection Established"-->
+								</do_if>
 							</do_if>
+							<do_else>
+								<do_if value="$speak">
+									<speak actor="player.computer" page="10002" line="563" /> <!--"No life signs detected"-->
+									<show_notification text="player.entity.$SelectedFleet + '-' + event.param.$echo + ': ' + {10002, 563}"/> <!--"Flt: No life signs detected"-->
+								</do_if>							
+							</do_else>
 						</do_if>
-						<do_elseif value="player.entity.$SelectedWing == 'B'">
-							<set_value name="player.entity.$SelectedWingID" exact="2"/>
-							<do_if value="$speak">
-								<speak actor="player.computer" page="20401" line="2" /> <!--"Beta"-->
+						<do_elseif value="event.param.$echo == 'B'">
+							<do_if value="@player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{2}">
+								<set_value name="player.entity.$SelectedWing" exact="event.param.$echo"/>
+								<set_value name="player.entity.$SelectedWingID" exact="2"/>
+								<do_if value="$speak">
+									<speak actor="player.computer" page="20401" line="2" /> <!--"Beta"-->
+									<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {10002, 27}"/> <!--"Flt: Connection Established"-->
+								</do_if>
 							</do_if>
+							<do_else>
+								<do_if value="$speak">
+									<speak actor="player.computer" page="10002" line="563" /> <!--"No life signs detected"-->
+									<show_notification text="player.entity.$SelectedFleet + '-' + event.param.$echo + ': ' + {10002, 563}"/> <!--"Flt: No life signs detected"-->
+								</do_if>							
+							</do_else>
 						</do_elseif>
-						<do_elseif value="player.entity.$SelectedWing == 'G'">
-							<set_value name="player.entity.$SelectedWingID" exact="3"/>
-							<do_if value="$speak">
-								<speak actor="player.computer" page="20401" line="3" /> <!--"Gamma"-->
+						<do_elseif value="event.param.$echo == 'G'">
+							<do_if value="@player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{3}">
+								<set_value name="player.entity.$SelectedWing" exact="event.param.$echo"/>
+								<set_value name="player.entity.$SelectedWingID" exact="3"/>
+								<do_if value="$speak">
+									<speak actor="player.computer" page="20401" line="3" /> <!--"Gamma"-->
+									<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {10002, 27}"/> <!--"Flt: Connection Established"-->
+								</do_if>
 							</do_if>
+							<do_else>
+								<do_if value="$speak">
+									<speak actor="player.computer" page="10002" line="563" /> <!--"No life signs detected"-->
+									<show_notification text="player.entity.$SelectedFleet + '-' + event.param.$echo + ': ' + {10002, 563}"/> <!--"Flt: No life signs detected"-->
+								</do_if>							
+							</do_else>
 						</do_elseif>
-						<do_elseif value="player.entity.$SelectedWing == 'D'">
-							<set_value name="player.entity.$SelectedWingID" exact="4"/>
-							<do_if value="$speak">
-								<speak actor="player.computer" page="20401" line="4" /> <!--"Delta"-->
+						<do_elseif value="event.param.$echo == 'D'">
+							<do_if value="@player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{4}">
+								<set_value name="player.entity.$SelectedWing" exact="event.param.$echo"/>
+								<set_value name="player.entity.$SelectedWingID" exact="4"/>
+								<do_if value="$speak">
+									<speak actor="player.computer" page="20401" line="4" /> <!--"Delta"-->
+									<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {10002, 27}"/> <!--"Flt: Connection Established"-->
+								</do_if>
 							</do_if>
-						</do_elseif>
+							<do_else>
+								<do_if value="$speak">
+									<speak actor="player.computer" page="10002" line="563" /> <!--"No life signs detected"-->
+									<show_notification text="player.entity.$SelectedFleet + '-' + event.param.$echo + ': ' + {10002, 563}"/> <!--"Flt: No life signs detected"-->
+								</do_if>							
+							</do_else>
+						</do_elseif>						
 						<!--If given an unknown shortcut select no wing. Implicitly captures 'clear' command-->
 						<do_else>
 							<set_value name="player.entity.$SelectedWing" exact="null"/>
 							<set_value name="player.entity.$SelectedWingID" exact="null"/>
 							<do_if value="$speak">
-								<speak actor="player.computer" page="10002" line="135" /> <!--"Cancelled"-->
+								<speak actor="player.computer" page="10002" line="28" /> <!--"Connection Lost"-->
+								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {10002, 28}"/> <!--"Flt: Connection Lost"-->
 							</do_if>
 						</do_else>
 						
@@ -967,9 +1008,11 @@
 							
 							<do_if value="(@$target.isclass.destructible) and (not (@$target.owner == faction.player)) and $validselection">
 								<speak actor="player.computer" page="10002" line="132" /> <!--"Command Accepted"-->
+								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 431} + ' ' + {10002, 132}"/> <!--"Flt: Attack Command Accepted"-->
 							</do_if>
 							<do_else>
 								<speak actor="player.computer" page="10002" line="133" /> <!--"Command Rejected"-->
+								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 431} + ' ' + {10002, 133}"/> <!--"Flt: Attack Command Rejected"-->
 								<set_value name="$doaction" exact="false" />		
 							</do_else>
 						</do_if>
@@ -1027,9 +1070,11 @@
 							
 							<do_if value="(@$destfinal or @$target) and $validselection">
 								<speak actor="player.computer" page="10002" line="132" /> <!--"Command Accepted"-->
+								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1001, 7989} + ' ' + {10002, 132}"/> <!--"Flt: Protect Until Further Notice Command Accepted"-->
 							</do_if>
 							<do_else>
 								<speak actor="player.computer" page="10002" line="133" /> <!--"Command Rejected"-->
+								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1001, 7989} + ' ' + {10002, 133}"/> <!--"Flt: Protect Until Further Notice Command Rjected"-->
 								<set_value name="$doaction" exact="false" />		
 							</do_else>
 						</do_if>
@@ -1094,6 +1139,11 @@
 					</conditions>
 					<actions>
 						<set_value name="$removecat" exact="event.param.$echo" />
+						 
+						<do_if value="event.param.$id == 'hk_remove_sub_orders_whk' or event.param.$id == 'hk_remove_all_orders_whk'">
+							<speak actor="player.computer" page="10002" line="135" /> <!--"Command Accepted"-->
+							<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1001, 7832} + ' ' + {10002, 132}"/> <!--"Flt: Remove All Orders Command Accepted"-->
+						</do_if>
 						
 						<do_if value="$removecat == 'Subordinates: All'">
 							<set_value name="$orderships" exact="@player.entity.$SelectedFleetCommander.allsubordinates" />
@@ -1123,15 +1173,17 @@
 						<set_value name="$doaction" exact="true" />
 						
 						<do_if value="event.param.$id == 'hk_dock_whk'">
-							<set_value name="$destfinal" exact="[player.ship, position.[0,0,0]]" />
+							<set_value name="$destfinal" exact="[player.target, position.[0,0,0]]" />
 							
 							<set_value name="$validselection" exact="((@player.entity.$SelectedFleetCommander and @player.entity.$SelectedFleetCommander != player.occupiedship) or (@player.entity.$SelectedWing and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}))" />
 							
 							<do_if value="@$destfinal and $validselection">
 								<speak actor="player.computer" page="10002" line="132" /> <!--"Command Accepted"-->
+								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 251} + ' ' + {10002, 132}"/> <!--"Flt: Fly and Wait Command Accepted"-->
 							</do_if>
 							<do_else>
 								<speak actor="player.computer" page="10002" line="133" /> <!--"Command Rejected"-->
+								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 251} + ' ' + {10002, 133}"/> <!--"Flt: Fly and Wait Command Rejected"-->								
 								<set_value name="$doaction" exact="false" />		
 							</do_else>
 						</do_if>
@@ -1178,9 +1230,11 @@
 							
 							<do_if value="@$destfinal and $validselection">
 								<speak actor="player.computer" page="10002" line="132" /> <!--"Command Accepted"-->
+								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 631} + ' ' + {10002, 132}"/> <!--"Flt: Attack Targets in Range Command Accepted"-->
 							</do_if>
 							<do_else>
 								<speak actor="player.computer" page="10002" line="133" /> <!--"Command Rejected"-->
+								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 631} + ' ' + {10002, 133}"/> <!--"Flt: Attack Targets in Range Command Rejected"-->
 								<set_value name="$doaction" exact="false" />		
 							</do_else>
 						</do_if>
@@ -1223,12 +1277,14 @@
 							<set_value name="$destfinal" exact="player.target" />
 							
 							<set_value name="$validselection" exact="((@player.entity.$SelectedFleetCommander and @player.entity.$SelectedFleetCommander != player.occupiedship) or (@player.entity.$SelectedWing and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}))" />
-							
+
 							<do_if value="@$destfinal and @$destfinal.dockingallowed.{@player.entity.$SelectedFleetCommander} and $validselection">
 								<speak actor="player.computer" page="10002" line="132" /> <!--"Command Accepted"-->
+								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 451} + ' ' + {10002, 132}"/> <!--"Flt: Dock and Wait Command Accepted"-->
 							</do_if>
 							<do_else>
 								<speak actor="player.computer" page="10002" line="133" /> <!--"Command Rejected"-->
+								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 451} + ' ' + {10002, 133}"/> <!--"Flt: Dock and Wait Command Rejected"-->
 								<set_value name="$doaction" exact="false" />		
 							</do_else>
 						</do_if>
