@@ -1172,7 +1172,7 @@
 					<actions>
 						<set_value name="$doaction" exact="true" />
 						
-						<do_if value="event.param.$id == 'hk_dock_whk'">
+						<do_if value="event.param.$id == 'hk_move_whk'">
 							<set_value name="$destfinal" exact="[player.target, position.[0,0,0]]" />
 							
 							<set_value name="$validselection" exact="((@player.entity.$SelectedFleetCommander and @player.entity.$SelectedFleetCommander != player.occupiedship) or (@player.entity.$SelectedWing and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}))" />
