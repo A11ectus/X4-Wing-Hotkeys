@@ -196,7 +196,7 @@
 				<do_if value="player.entity.$WHK_AUO_Enabled">
 					<set_value name="$category" exact="{23811, 3002}" comment="Urgent Wing Orders" />
 										
-					<set_value name="$text" exact="$selectiontext + {12115, 2006}" comment="Wing: Fly and Wait, Urgent" />
+					<set_value name="$text" exact="{12115, 2006}" comment="Fly and Wait, Urgent" />
 					<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
 						$id = 'hk_move_urgent_whk',
 						$category = $category,
@@ -206,7 +206,7 @@
 						$echo='Wing: Urgent'
 					]" />															
 												
-					<set_value name="$text" exact="$selectiontext + {12115, 2008}" comment="Wing: Dock and Wait, Urgent" />
+					<set_value name="$text" exact="{12115, 2008}" comment="Dock and Wait, Urgent" />
 					<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
 						$id = 'hk_dock_urgent_whk',
 						$category = $category,
