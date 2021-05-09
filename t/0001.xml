@@ -21,5 +21,7 @@
 		<!-- Hotkey Sections -->
 		<t id="3000">Fleet and Wing Selectors</t>	
 		<t id="3001">Basic Wing Orders</t>	
+		<t id="3002">Urgent Wing Orders</t>	
+		<t id="3003">Subsystem Targeting Wing Orders</t>	
 	</page>
 </language>
