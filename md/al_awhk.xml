@@ -1162,6 +1162,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$doaction" exact="true" />
+						<set_value name="$immed" exact="false" />
 						
 						<do_if value="event.param.$id == 'hk_attack_whk'">
 							<set_value name="$target" exact="player.target" />
@@ -1171,6 +1172,7 @@
 							<do_if value="(@$target.isclass.destructible) and (not (@$target.owner == faction.player)) and $validselection">
 								<speak actor="player.computer" page="10002" line="132" /> <!--"Command Accepted"-->
 								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 431} + ' ' + {10002, 132}"/> <!--"Flt: Attack Command Accepted"-->
+								<set_value name="$immed" exact="true" />
 							</do_if>
 							<do_else>
 								<speak actor="player.computer" page="10002" line="133" /> <!--"Command Rejected"-->
@@ -1194,7 +1196,7 @@
 							<do_for_each name="$ship" in="@$orderships">						
 								<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
 								<do_if value="$ship">
-									<create_order name="$order" object="$ship" id="'Attack'">
+									<create_order name="$order" object="$ship" id="'Attack'" immediate="$immed">
 										<param name="primarytarget" value="$target" />
 										<param name="debugchance" value="alAWHK.$debugChance" />
 									</create_order>
@@ -1210,6 +1212,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$doaction" exact="true" />
+						<set_value name="$immed" exact="false" />
 						<set_value name="$protectcat" exact="event.param.$echo" />
 						
 						<do_if value="event.param.$id == 'hk_protectposition_whk' or event.param.$id == 'hk_protect_whk'">
@@ -1233,6 +1236,7 @@
 							<do_if value="(@$destfinal or @$target) and $validselection">
 								<speak actor="player.computer" page="10002" line="132" /> <!--"Command Accepted"-->
 								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1001, 7989} + ' ' + {10002, 132}"/> <!--"Flt: Protect Until Further Notice Command Accepted"-->
+								<set_value name="$immed" exact="true" />
 							</do_if>
 							<do_else>
 								<speak actor="player.computer" page="10002" line="133" /> <!--"Command Rejected"-->
@@ -1260,7 +1264,7 @@
 								<do_for_each name="$ship" in="@$orderships">						
 									<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
 									<do_if value="$ship">
-										<create_order name="$order" object="$ship" id="'ProtectShip'">
+										<create_order name="$order" object="$ship" id="'ProtectShip'" immediate="$immed">
 											<param name="target" value="$target" />
 											<param name="debugchance" value="alAWHK.$debugChance" />
 										</create_order>
@@ -1272,7 +1276,7 @@
 								<do_for_each name="$ship" in="@$orderships">						
 									<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
 									<do_if value="$ship">
-										<create_order name="$order" object="$ship" id="'ProtectStation'">
+										<create_order name="$order" object="$ship" id="'ProtectStation'" immediate="$immed">
 											<param name="station" value="$target" />
 											<param name="debugchance" value="alAWHK.$debugChance" />
 										</create_order>
@@ -1284,7 +1288,7 @@
 								<do_for_each name="$ship" in="@$orderships">						
 									<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
 									<do_if value="$ship">
-										<create_order name="$order" object="$ship" id="'ProtectPosition'">
+										<create_order name="$order" object="$ship" id="'ProtectPosition'" immediate="$immed">
 											<param name="destination" value="$destfinal" />
 											<param name="debugchance" value="alAWHK.$debugChance" />
 										</create_order>
@@ -1333,6 +1337,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$doaction" exact="true" />
+						<set_value name="$immed" exact="false" />
 						
 						<do_if value="event.param.$id == 'hk_move_whk'">
 							<set_value name="$destfinal" exact="[player.target, position.[0,0,0]]" />
@@ -1342,6 +1347,7 @@
 							<do_if value="@$destfinal and $validselection">
 								<speak actor="player.computer" page="10002" line="132" /> <!--"Command Accepted"-->
 								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 251} + ' ' + {10002, 132}"/> <!--"Flt: Fly and Wait Command Accepted"-->
+								<set_value name="$immed" exact="true" />
 							</do_if>
 							<do_else>
 								<speak actor="player.computer" page="10002" line="133" /> <!--"Command Rejected"-->
@@ -1368,7 +1374,7 @@
 							<do_for_each name="$ship" in="$orderships">
 								<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
 								<do_if value="$ship">
-									<create_order name="$order" object="$ship" id="'MoveWait'">
+									<create_order name="$order" object="$ship" id="'MoveWait'" immediate="$immed">
 										<param name="destination" value="$destfinal" />
 										<param name="debugchance" value="alAWHK.$debugChance" />
 									</create_order>
@@ -1384,6 +1390,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$doaction" exact="true" />
+						<set_value name="$immed" exact="false" />
 						
 						<do_if value="event.param.$id == 'hk_attackinrange_whk'">
 							<set_value name="$destfinal" exact="[player.target, position.[0,0,0]]" />
@@ -1393,6 +1400,7 @@
 							<do_if value="@$destfinal and $validselection">
 								<speak actor="player.computer" page="10002" line="132" /> <!--"Command Accepted"-->
 								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 631} + ' ' + {10002, 132}"/> <!--"Flt: Attack Targets in Range Command Accepted"-->
+								<set_value name="$immed" exact="true" />
 							</do_if>
 							<do_else>
 								<speak actor="player.computer" page="10002" line="133" /> <!--"Command Rejected"-->
@@ -1418,7 +1426,7 @@
 							<do_for_each name="$ship" in="$orderships">
 								<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
 								<do_if value="$ship">
-									<create_order name="$order" object="$ship" id="'AttackInRange'">
+									<create_order name="$order" object="$ship" id="'AttackInRange'" immediate="$immed">
 										<param name="destination" value="$destfinal" />
 										<param name="debugchance" value="alAWHK.$debugChance" />
 									</create_order>
@@ -1437,12 +1445,14 @@
 						
 						<do_if value="event.param.$id == 'hk_dock_whk'">
 							<set_value name="$destfinal" exact="player.target" />
+							<set_value name="$immed" exact="false" />
 							
 							<set_value name="$validselection" exact="((@player.entity.$SelectedFleetCommander and @player.entity.$SelectedFleetCommander != player.occupiedship) or (@player.entity.$SelectedWing and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}))" />
 
 							<do_if value="@$destfinal and @$destfinal.dockingallowed.{@player.entity.$SelectedFleetCommander} and $validselection">
 								<speak actor="player.computer" page="10002" line="132" /> <!--"Command Accepted"-->
 								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 451} + ' ' + {10002, 132}"/> <!--"Flt: Dock and Wait Command Accepted"-->
+								<set_value name="$immed" exact="true" />
 							</do_if>
 							<do_else>
 								<speak actor="player.computer" page="10002" line="133" /> <!--"Command Rejected"-->
@@ -1466,7 +1476,7 @@
 							<do_for_each name="$ship" in="@$orderships">						
 								<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
 								<do_if value="$ship">							
-									<create_order name="$order" object="$ship" id="'DockAndWait'">
+									<create_order name="$order" object="$ship" id="'DockAndWait'" immediate="$immed">
 										<param name="destination" value="$destfinal" />
 										<param name="debugchance" value="alAWHK.$debugChance" />
 									</create_order>
