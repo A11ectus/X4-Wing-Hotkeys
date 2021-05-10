@@ -736,6 +736,18 @@
 								]" />
 							</do_if>	
 							
+							<do_if value="player.entity.$WHK_AUO_Enabled and $target and $validselection">	
+								<set_value name="$text" exact="{12115, 2009}" comment="Attack Targets in Range, Immediate" />
+								<signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param = "table[
+									$id = 'order_attackinrange_immediate_whk',
+									$section = $section,
+									$text = $text,
+									$icon = 'order_attackinrange',
+									$callback = md.al_urgent_orders.InteractMenu_OnAttackInRangeUrgent,
+									$echo='Wing: Immediate'
+								]" />							
+							</do_if>
+							
 							<!--Subsystem Targeting Orders-->
 														
 							<do_if value="player.entity.$WHK_STO_Enabled and ($target.isclass.ship or $target.isclass.station) and (not ($target.owner == faction.player))  and $validselection">	
