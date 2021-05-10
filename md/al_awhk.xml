@@ -220,7 +220,7 @@
 				<!--Subsystem Targeting Orders-->
 
 				<do_if value="player.entity.$WHK_STO_Enabled">
-					<set_value name="$category" exact="{23811, 3002}" comment="Subsystem Targeting Wing Orders" />				
+					<set_value name="$category" exact="{23811, 3003}" comment="Subsystem Targeting Wing Orders" />				
 					
 					<set_value name="$text" exact="{92015, 2000}" comment="Attack Engines" />
 					<signal_cue_instantly cue="md.Hotkey_API.Register_Action" param = "table[
