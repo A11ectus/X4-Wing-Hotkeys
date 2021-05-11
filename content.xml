@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<content id="ALWingHotkeys" name="Wing Hotkeys" author="Allectus" version="100" date="2021-05-01" save="false" enabled="1" description="Adds hotkeys to select wings and issue orders to them." sync="false" lastupdate="1618759768">
+<content id="ALWingHotkeys" name="Wing Hotkeys" author="Allectus" version="100" date="2021-05-11" save="false" enabled="1" description="Adds quick select functionality to select fleets and wings, then rapidly issue orders to them.  Includes both right-click and hotkey integration to allow you to command from either the map, bridge, or cockpit." sync="false" lastupdate="1618759768">
   <dependency id="ws_2042901274" optional="false" name="SirNukes Mod Support APIs"/>
   <dependency id="ws_2459574093" optional="true" name="Urgent Orders"/>
   <dependency id="ws_2437198154" optional="true" name="Subsystem Targeting Orders"/>
