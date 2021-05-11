@@ -2,7 +2,7 @@ Wing Hotkeys:
 ============
 By: Allectus
 
-Github:
+Github: https://github.com/A11ectus/X4-Wing-Hotkeys
 Steam:
 Nexus:
 
@@ -57,7 +57,7 @@ Some Notes:
 	
 	* There are two remove order commands.  The standard remove orders command behaves as normal and will remove the orders from your selection.  A different remove orders from subordinates command can be issued to fleet commanders to remove the individual orders given to their wings without affecting the orders for the commander -- this allows you to recall detached wings without affecting the orders of the commander.  This is slightly different from the vanilla recall subordinates command as it simply clears the order stack of subordinates (returning them to their normal fleet assignments) without placing a recall order on the top of the fleet commanders stack and forcing them to wait for all of their subordinates to dock.
 	
-See here for a demonstration:
+See here for a demonstration: https://youtu.be/kzkR9ay0Uio
 
 Install:
 ========
