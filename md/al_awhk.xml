@@ -1038,7 +1038,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$speak" exact="false" />
-						<do_if value="event.param.$id == 'hk_select_1stfleet_whk' or event.param.$id == 'hk_select_2ndfleet_whk'">
+						<do_if value="event.param.$id == 'hk_select_1stfleet_whk' or event.param.$id == 'hk_select_2ndfleet_whk' or event.param.$id == 'hk_select_fleet_clear_whk'">
 							<set_value name="$speak" exact="true" />
 						</do_if>     
 					
@@ -1072,7 +1072,7 @@
 							<signal_cue_instantly cue="Update_Player_Commander" />
 							<do_if value="$speak">
 								<speak actor="player.computer" page="10002" line="28" /> <!--"Connection Lost"-->
-								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {10002, 28}"/> <!--"Flt: Connection Lost"-->
+								<show_notification text="{23811, 2000} + ': ' + player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ' ' + {1001, 17}"/> <!--"Clear Fleet Selection: Flt Selected"-->
 							</do_if>
 						</do_else>
 						
@@ -1086,7 +1086,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$speak" exact="false" />
-						<do_if value="event.param.$id == 'hk_select_alpha_whk' or event.param.$id == 'hk_select_beta_whk' or event.param.$id == 'hk_select_gamma_whk' or event.param.$id == 'hk_select_delta_whk'">
+						<do_if value="event.param.$id == 'hk_select_alpha_whk' or event.param.$id == 'hk_select_beta_whk' or event.param.$id == 'hk_select_gamma_whk' or event.param.$id == 'hk_select_delta_whk' or event.param.$id == 'hk_select_clear_whk'">
 							<set_value name="$speak" exact="true" />
 						</do_if>
 						  
@@ -1161,7 +1161,7 @@
 							<set_value name="player.entity.$SelectedWingID" exact="null"/>
 							<do_if value="$speak">
 								<speak actor="player.computer" page="10002" line="28" /> <!--"Connection Lost"-->
-								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {10002, 28}"/> <!--"Flt: Connection Lost"-->
+								<show_notification text="{23811, 1000} + ': ' + player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ' ' + {1001, 17}"/> <!--"Clear Wing Selection: Flt Selected"-->
 							</do_if>
 						</do_else>
 						
@@ -1228,24 +1228,26 @@
 						<set_value name="$protectcat" exact="event.param.$echo" />
 						
 						<do_if value="event.param.$id == 'hk_protectposition_whk' or event.param.$id == 'hk_protect_whk'">
+							<set_value name="$target" exact="player.target" />
+							<set_value name="$destoffsetcomponent" exact="@$target.sector" />
+							<set_value name="$destoffset" exact="@$target.relativeposition.{@$destoffsetcomponent}" />
+							<set_value name="$destfinal" exact="[@$destoffsetcomponent, @$destoffset]" />	
+
 							<do_if value="event.param.$id == 'hk_protectposition_whk'">
-								<set_value name="$destfinal" exact="[player.target, position.[0,0,0]]" />
 								<set_value name="$protectcat" exact="'Wing: Protect Position'" />
 							</do_if>
 							<do_elseif value="event.param.$id == 'hk_protect_whk'">
 								<do_if value="$target.isclass.ship or $target.isclass.spacesuit">
-									<set_value name="$target" exact="player.target" />
 									<set_value name="$protectcat" exact="'Wing: Protect Ship'" />
 								</do_if>
 								<do_elseif value="player.target.isclass.station">
-									<set_value name="$target" exact="player.target" />
 									<set_value name="$protectcat" exact="'Wing: Protect Station'" />
 								</do_elseif>
 							</do_elseif>
 							
 							<set_value name="$validselection" exact="((@player.entity.$SelectedFleetCommander and @player.entity.$SelectedFleetCommander != player.occupiedship) or (@player.entity.$SelectedWing and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}))" />
 							
-							<do_if value="(@$destfinal or @$target) and $validselection">
+							<do_if value="@player.target and $validselection">
 								<speak actor="player.computer" page="10002" line="132" /> <!--"Command Accepted"-->
 								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1001, 7989} + ' ' + {10002, 132}"/> <!--"Flt: Protect Until Further Notice Command Accepted"-->
 								<set_value name="$immed" exact="true" />
@@ -1256,11 +1258,19 @@
 								<set_value name="$doaction" exact="false" />		
 							</do_else>
 						</do_if>
-						<do_else>
-							<set_value name="$target" exact="@event.param.$object" />
-							<set_value name="$destoffset" exact="event.param.$offset" />
-							<set_value name="$destoffsetcomponent" exact="event.param.$offsetcomponent" />
-							<set_value name="$destfinal" exact="[$destoffsetcomponent, $destoffset]" />
+						<do_else>							
+							<set_value name="$target" exact="event.param.$object" />
+							
+							<do_if value="$target.isclass.sector">
+								<set_value name="$destoffsetcomponent" exact="event.param.$offsetcomponent" />
+								<set_value name="$destoffset" exact="event.param.$offset" />
+							</do_if>
+							<do_else>
+								<set_value name="$destoffsetcomponent" exact="$target.sector" />
+								<set_value name="$destoffset" exact="$target.relativeposition.{$destoffsetcomponent}" />
+							</do_else>
+							
+							<set_value name="$destfinal" exact="[$destoffsetcomponent, $destoffset]" />								
 						</do_else>					
 						
 						<do_if value="$doaction">
@@ -1352,11 +1362,14 @@
 						<set_value name="$immed" exact="false" />
 						
 						<do_if value="event.param.$id == 'hk_move_whk'">
-							<set_value name="$destfinal" exact="[player.target, position.[0,0,0]]" />
+							<set_value name="$destobject" exact="player.target" />
+							<set_value name="$destoffsetcomponent" exact="@$destobject.sector" />
+							<set_value name="$destoffset" exact="@$destobject.relativeposition.{@$destoffsetcomponent}" />
+							<set_value name="$destfinal" exact="[@$destoffsetcomponent, @$destoffset]" />	
 							
 							<set_value name="$validselection" exact="((@player.entity.$SelectedFleetCommander and @player.entity.$SelectedFleetCommander != player.occupiedship) or (@player.entity.$SelectedWing and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}))" />
 							
-							<do_if value="@$destfinal and $validselection">
+							<do_if value="@$destobject and $validselection">
 								<speak actor="player.computer" page="10002" line="132" /> <!--"Command Accepted"-->
 								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 251} + ' ' + {10002, 132}"/> <!--"Flt: Fly and Wait Command Accepted"-->
 								<set_value name="$immed" exact="true" />
@@ -1369,9 +1382,17 @@
 						</do_if>
 						<do_else>
 							<set_value name="$destobject" exact="event.param.$object" />
-							<set_value name="$destoffset" exact="event.param.$offset" />
-							<set_value name="$destoffsetcomponent" exact="event.param.$offsetcomponent" />
-							<set_value name="$destfinal" exact="[$destoffsetcomponent, $destoffset]" />
+							
+							<do_if value="$destobject.isclass.sector">
+								<set_value name="$destoffsetcomponent" exact="event.param.$offsetcomponent" />
+								<set_value name="$destoffset" exact="event.param.$offset" />
+							</do_if>
+							<do_else>
+								<set_value name="$destoffsetcomponent" exact="$destobject.sector" />
+								<set_value name="$destoffset" exact="$destobject.relativeposition.{$destoffsetcomponent}" />
+							</do_else>
+							
+							<set_value name="$destfinal" exact="[$destoffsetcomponent, $destoffset]" />	
 						</do_else>
 						
 						<do_if value="$doaction">
@@ -1383,15 +1404,29 @@
 								<set_value name="$orderships" exact="[@player.entity.$SelectedFleetCommander]" />
 							</do_else>
 													
-							<do_for_each name="$ship" in="$orderships">
-								<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
-								<do_if value="$ship">
-									<create_order name="$order" object="$ship" id="'MoveWait'" immediate="$immed">
-										<param name="destination" value="$destfinal" />
-										<param name="debugchance" value="alAWHK.$debugChance" />
-									</create_order>
-								</do_if>
-							</do_for_each>						
+							<do_if value="$destobject.isclass.sector">
+								<do_for_each name="$ship" in="$orderships">
+									<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
+									<do_if value="$ship">
+										<create_order name="$order" object="$ship" id="'MoveWait'" immediate="$immed">
+											<param name="destination" value="$destfinal" />
+											<param name="debugchance" value="alAWHK.$debugChance" />
+										</create_order>
+									</do_if>
+								</do_for_each>						
+							</do_if>
+							<do_else>
+								<do_for_each name="$ship" in="$orderships">
+									<debug_text text="'$ship: ' + $ship + ' (' + @$ship.knownname + ')'" chance="alAWHK.$debugChance" />
+									<do_if value="$ship">
+										<create_order name="$order" object="$ship" id="'MoveToObject'" immediate="$immed">
+											<param name="destination" value="$destobject" />
+											<param name="debugchance" value="alAWHK.$debugChance" />
+										</create_order>
+									</do_if>
+								</do_for_each>						
+							</do_else>							
+
 						</do_if>
 						<reset_cue cue="this" />
 					</actions>
@@ -1405,11 +1440,14 @@
 						<set_value name="$immed" exact="false" />
 						
 						<do_if value="event.param.$id == 'hk_attackinrange_whk'">
-							<set_value name="$destfinal" exact="[player.target, position.[0,0,0]]" />
+							<set_value name="$target" exact="player.target" />
+							<set_value name="$destoffsetcomponent" exact="@$target.sector" />
+							<set_value name="$destoffset" exact="@$target.relativeposition.{@$destoffsetcomponent}" />
+							<set_value name="$destfinal" exact="[@$destoffsetcomponent, @$destoffset]" />	
 							
 							<set_value name="$validselection" exact="((@player.entity.$SelectedFleetCommander and @player.entity.$SelectedFleetCommander != player.occupiedship) or (@player.entity.$SelectedWing and @player.entity.$SelectedFleetCommander.activesubordinategroupids.indexof.{@player.entity.$SelectedWingID}))" />
 							
-							<do_if value="@$destfinal and $validselection">
+							<do_if value="@player.target and $validselection">
 								<speak actor="player.computer" page="10002" line="132" /> <!--"Command Accepted"-->
 								<show_notification text="player.entity.$SelectedFleet + '-' + player.entity.$SelectedWing + ': ' + {1041, 631} + ' ' + {10002, 132}"/> <!--"Flt: Attack Targets in Range Command Accepted"-->
 								<set_value name="$immed" exact="true" />
@@ -1420,10 +1458,19 @@
 								<set_value name="$doaction" exact="false" />		
 							</do_else>
 						</do_if>
-						<do_else>
-							<set_value name="$destoffset" exact="event.param.$offset" />
-							<set_value name="$destoffsetcomponent" exact="event.param.$offsetcomponent" />
-							<set_value name="$destfinal" exact="[$destoffsetcomponent, $destoffset]" />
+						<do_else>							
+							<set_value name="$target" exact="event.param.$object" />
+							
+							<do_if value="$target.isclass.sector">
+								<set_value name="$destoffsetcomponent" exact="event.param.$offsetcomponent" />
+								<set_value name="$destoffset" exact="event.param.$offset" />
+							</do_if>
+							<do_else>
+								<set_value name="$destoffsetcomponent" exact="$target.sector" />
+								<set_value name="$destoffset" exact="$target.relativeposition.{$destoffsetcomponent}" />
+							</do_else>
+							
+							<set_value name="$destfinal" exact="[$destoffsetcomponent, $destoffset]" />		
 						</do_else>					
 						
 						<do_if value="$doaction">

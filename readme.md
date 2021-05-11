@@ -43,9 +43,7 @@ History:
 
 1) Iterate STO and AUO
 	STO:
-		Add attack all to back of attack fighters
 		merge unified lua
 	AUO:
 		Correct awaiting signal
-		Add attack all enemies in range
 		Incorporate chinese translation
