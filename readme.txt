@@ -3,8 +3,8 @@ Wing Hotkeys:
 By: Allectus
 
 Github: https://github.com/A11ectus/X4-Wing-Hotkeys
-Steam:
-Nexus:
+Steam: https://steamcommunity.com/sharedfiles/filedetails/?id=2484521478
+Nexus: https://www.nexusmods.com/x4foundations/mods/720
 
 Mod effects:
 ============
