@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<content id="ws_2484521478" name="Wing Hotkeys" author="Allectus" version="100" date="2021-05-11" save="false" enabled="1" description="Adds quick select functionality to select fleets and wings, then rapidly issue orders to them.  Includes both right-click and hotkey integration to allow you to command from either the map, bridge, or cockpit." sync="false" lastupdate="1620777780">
+<content id="ws_2484521478" name="Wing Hotkeys" author="Allectus" version="100" date="2021-05-11" save="false" enabled="1" description="" sync="false" lastupdate="1620777780">
+  <text language="44" name="Wing Hotkeys" description="Adds quick select functionality to select fleets and wings, then rapidly issue orders to them.  Includes both right-click and hotkey integration to allow you to command from either the map, bridge, or cockpit."/>
+  <text language="86" name="小队热键集成" description="添加快速选择功能以选择舰队和小组, 然后迅速向他们发出命令.  包括右键单击和热键集成，允许您从地图、舰桥桥或驾驶舱发出命令."/>
   <dependency id="ws_2042901274" optional="false" name="SirNukes Mod Support APIs"/>
   <dependency id="ws_2459574093" optional="true" name="Urgent Orders"/>
   <dependency id="ws_2437198154" optional="true" name="Subsystem Targeting Orders"/>
