@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!-- english -->  
+<language>
+	<!-- "Allectus: Wing Hotkeys" = "AWHK" = "1 23 8 11" = "23811" in  https://www.boxentriq.com/code-breaking/letters-to-numbers -->
+	<page id="23811" voice="no">
+		<t id="1">Allectus: 小队热键</t>
+		<!-- config -->
+		<t id="2">调试日志</t>
+		<t id="3">执行调试功能</t>
+		<!-- Selectors -->
+		<t id="1000">清除组别选择</t>
+		<t id="1001">选择 阿尔法 组</t>
+		<t id="1002">选择 贝塔 组</t>
+		<t id="1003">选择 伽玛 组</t>
+		<t id="1004">选择 得尔塔 组</t>
+		<t id="2000">清除舰队选择</t>
+		<t id="2001">设为 1st 舰队</t>	
+		<t id="2002">设为 2nd 舰队</t>	
+		<t id="2003">选择 1st 舰队</t>	
+		<t id="2004">选择 2nd 舰队</t>	
+		<!-- Hotkey Sections -->
+		<t id="3000">舰队和组别选择器</t>	
+		<t id="3001">基础组别命令</t>	
+		<t id="3002">紧急组别命令</t>	
+		<t id="3003">目标子系统组别命令</t>	
+	</page>
+</language>
